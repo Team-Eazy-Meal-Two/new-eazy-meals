@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button as MuiButton } from "@material-ui/core";
 import { tokens } from "../../data/tokens"
+import { Link } from "react-router-dom";
 
 
 const COLORS = {
@@ -39,7 +40,7 @@ const calcHover = ({ importance, inverse }) => {
 
 const calcActionProps = (action) => {
   if (typeof action !== 'string') return { component: 'button', onclick: action }
-
+   return { component: Link, to: action }
 }
 
 const StyleButton = styled(MuiButton)`
@@ -66,10 +67,10 @@ const StyleButton = styled(MuiButton)`
  */
 
 export const Button = (props) => {
-    const {importance , action } = props;
+    const {importance , action, full = false} = props;
     const variant = importance === 'primary' ? 'contained' : 'outlined'
-    
-    return <StyleButton {...props} variant={variant} />
+    const actionProps = calcActionProps(action)
+    return <StyleButton {...props} {...actionProps} fullWidth={full} variant={variant} />
     
 }
 export default Button;

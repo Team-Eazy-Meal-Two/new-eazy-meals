@@ -15,11 +15,19 @@ export const Demo = () => {
       </div>
 
       <div>
+        <Button importance="secondary" full inverse>Hello World </Button>
+      </div>
+
+      <div>
         <Button importance="primary">Hello World </Button>
       </div>
       <DarkGb>
       <div>
         <Button importance="secondary" inverse>Hello World </Button>
+      </div>
+
+      <div>
+        <Button importance="secondary" full inverse>Hello World </Button>
       </div>
 
       <div>
