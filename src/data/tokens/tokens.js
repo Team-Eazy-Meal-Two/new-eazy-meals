@@ -87,3 +87,5 @@ export const tokens = {
   colors,
   radius,
 };
+
+export default tokens;
