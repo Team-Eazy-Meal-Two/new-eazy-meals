@@ -7,6 +7,7 @@ const COLORS = {
   white: `rgb(${tokens.colors.white})`,
   black: `rgb(${tokens.colors.black})`,
   blackMedium: `rgba(${tokens.colors.black}, ${tokens.opacity.medium})`,
+  blackStronger: `rgba(${tokens.colors.black}, ${tokens.opacity.stronger})`,
   blackStrong: `rgba(${tokens.colors.black}, ${tokens.opacity.strong})`,
   whiteStrong: `rgba(${tokens.colors.white}, ${tokens.opacity.strong})`,
   whiteStronger: `rgba(${tokens.colors.white}, ${tokens.opacity.stronger})`,
@@ -14,7 +15,7 @@ const COLORS = {
 
 const calcColor = ({ size, inverse }) => {
   if ((size === "xl" || size === "l ") && inverse) return COLORS.white;
-  if (size === "xl" || size === "l") return COLORS.black;
+  if (size === "xl" || size === "l") return COLORS.blackStronger;
   if (size === "m" && inverse) return COLORS.whiteStronger;
   if (size === "m") return COLORS.blackStrong
   if (inverse) return COLORS.whiteStrong
