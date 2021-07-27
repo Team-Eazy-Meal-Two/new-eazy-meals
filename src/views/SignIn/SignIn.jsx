@@ -15,8 +15,44 @@ const Base = styled.div`
  min-height: 100vh;
 `;
 
+
+
 export const SignIn = ()=> {
-    return <div>1234</div>
+    const {
+        email,
+        password,
+        confirmPassword,
+        setEmail,
+        setPassword,
+        setConfirmPassword,
+        createAccount,
+        allert,
+    } = useNewAccount();
+
+    const isResting = alert !== "creating";
+
+    return (
+        <Base>
+        <Layout
+        form
+        title="New Account"
+        alert={alert ? ALERTS[alert] : undefined}
+        secondary={["Cancel", isResting && "/"]}
+        primary={["Create Account", isResting &&
+        createAccount]}
+        >
+            <InputWrapper>
+            <Input
+            value={email}
+            label="Email"
+            accepts="email"
+            onchange={isResting && setEmail}
+            />
+            </InputWrapper>
+
+        </Layout>
+        </Base>
+    )
 }
 
 export default SignIn;
