@@ -28,7 +28,7 @@ const StyledTypography = styled(Typography)`
   color: ${calcColor};
 `;
 /**
- * @typeof {object} props
+ * @typedef {object} props
  * @property {JSX.Element} children
  * @property {'s' | 'm' | 'l' | 'xl'} size
  * @property {boolean} inverse
