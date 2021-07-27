@@ -8,7 +8,7 @@ import { Demo as InputDemo } from "../Input/Input.Demo";
 import { Demo as LayoutDemo } from "../Layout/Layout.Demo";
 import { Demo as LinkDemo } from "../Link/Link.Demo";
 import { Demo as TextDemo } from "../Text/Text.Demo";
-
+// import {Demo as AlertDemo} from "../Text/Alert.Demo";
 
 
 export const Demos = () => {
