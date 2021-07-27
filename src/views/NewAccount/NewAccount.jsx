@@ -1,7 +1,7 @@
 import React from 'react'
-import {Layout} from '../components/Layout/Layout'
-import{ input} from '../components/Input/Input'
-import { tokens} from '../../src/data/tokens/tokens'
+import {Layout} from '../../components/Layout'
+import{ Input} from '../../components/Input'
+import { tokens} from '../../data/tokens'
 import {useNewAccount}from './NewAcount.useNewAccount'
 
 
