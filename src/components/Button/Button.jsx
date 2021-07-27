@@ -43,7 +43,7 @@ const calcActionProps = (action) => {
   return { component: Link, to: action };
 };
 
-const StyleButton = styled(MuiButton)`
+const StyledButton = styled(MuiButton)`
   color: ${calcColor};
   background: ${calcBackground};
   border: ${calcBorder};
@@ -66,11 +66,12 @@ const StyleButton = styled(MuiButton)`
  */
 
 export const Button = (props) => {
-  const { children, importance = "secondary", action, full = false } = props;
+  const { children, inverse, importance = "secondary", action, full = false } = props;
   const variant = importance === "primary" ? "contained" : "outlined";
   const actionProps = calcActionProps(action);
   return (
-    <StyleButton
+    <StyledButton
+    inverse={inverse}
       importance={importance}
       children={children}
       {...actionProps}
