@@ -39,6 +39,40 @@ export const Demo = () => {
           Hello World!
         </Layout>
       </Wrapper>
+
+
+
+            <Wrapper>
+        <Layout inverse title="Hello World">Hello World!</Layout>
+      </Wrapper>
+      <Wrapper>
+        <Layout inverse title="Hello World" primary={["primary", "#"]}>
+          Hello World!
+        </Layout>
+      </Wrapper>
+
+      <Wrapper>
+        <Layout
+        inverse
+          title="Hello World"
+          primary={["primary", "#"]}
+          secondary={["secondary", "#"]}
+        >
+          Hello World!
+        </Layout>
+      </Wrapper>
+
+      <Wrapper>
+        <Layout
+        inverse
+          title="Hello World"
+          primary={["primary", "#"]}
+          secondary={["secondary", "#"]}
+          extra={["extra", "#"]}
+        >
+          Hello World!
+        </Layout>
+      </Wrapper>
     </div>
   );
 };
