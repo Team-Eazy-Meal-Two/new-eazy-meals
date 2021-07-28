@@ -6,6 +6,7 @@ import { Text } from "../Text";
 import { Button } from "../Button";
 import { Link } from "../Link";
 
+
 const COLORS = {
   white: `rgb(${tokens.colors.white})`,
   green: `rgb(${tokens.colors.green})`,
@@ -21,6 +22,7 @@ const Base = styled.div`
   flex-direction: column;
   background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)}}
 background: ${({ inverse }) => (inverse ? COLORS.whiteStronger : COLORS.blackStrong)}}
+min-height :100vh
 
   `;
 
@@ -34,6 +36,7 @@ const Nested = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+ ;
 `;
 
 const ButtonWrap = styled.div`
@@ -43,6 +46,12 @@ const ButtonWrap = styled.div`
 const LinkWrap = styled.div`
   padding: ${tokens.spacing.m} ${tokens.spacing.xs} ${tokens.spacing.xs};
 `;
+const NestedChildren = styled.div`
+width:100%
+`
+
+
+
 /**
  * @typedef {object} props
  * @property {JSX.Element} children
@@ -70,27 +79,27 @@ export const Layout = (props) => {
 
       <Content>
         <Nested>
-          <div>{children}</div>
+        < NestedChildren >{children} </NestedChildren >
         </Nested>
 
         {secondary && (
           <ButtonWrap>
-            <Button inverse={inverse} full>
-              123
+            <Button  action ={secondary[1]}inverse={inverse} full>
+            {secondary[0]}
             </Button>
           </ButtonWrap>
         )}
 
         {primary && (
           <ButtonWrap>
-            <Button full>123</Button>
+            <Button action ={primary[1]} inverse={inverse} full importance ='primary'>{primary[0]} </Button>
           </ButtonWrap>
         )}
 
         {extra && (
           <LinkWrap>
-            <Link inverse={inverse} full>
-              123
+            <Link action ={extra[1]}inverse={inverse} full>
+            {extra[0]}
             </Link>
           </LinkWrap>
         )}

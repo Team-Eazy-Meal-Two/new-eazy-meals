@@ -8,7 +8,7 @@ import { Demo as InputDemo } from "../Input/Input.Demo";
 import { Demo as LayoutDemo } from "../Layout/Layout.Demo";
 import { Demo as LinkDemo } from "../Link/Link.Demo";
 import { Demo as TextDemo } from "../Text/Text.Demo";
-// import {Demo as AlertDemo} from "../Text/Alert.Demo";
+import {Demo as AlertDemo} from "../Alert/Alert.Demo"
 
 import {LandingPage} from "../../views/LandingPage";
 import {NewAccount} from "../../views/NewAccount";
@@ -45,6 +45,10 @@ const Demos = ()=>{
 
       <Route path="/demo/text">
         <TextDemo />
+      </Route>
+
+      <Route path="/demo/alert">
+        <AlertDemo />
       </Route>
     </Switch>
   );

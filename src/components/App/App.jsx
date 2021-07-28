@@ -5,8 +5,12 @@ import { StylesProvider } from "@material-ui/core/styles";
 import { Routing } from "./App.Routing";
 
 const Global = createGlobalStyle`
-overflow-x: hidden;
+
+body{
+  overflow-x: hidden;
 overflow-y: scroll;
+
+}
 `;
 
 export const App = () => {

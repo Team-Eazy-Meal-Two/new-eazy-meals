@@ -30,7 +30,8 @@ export const useNewAccount = () => {
     setEmail,
     setPassword,
     setconfirmPassword,
-    createAccount
+    createAccount,
+    alert
   };
 };
 export default useNewAccount;
