@@ -3,42 +3,34 @@ import styled from "styled-components";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Inputs";
 import { tokens } from "../../data/tokens";
-import { useNewAccount } from "./NewAccount.useNewAccount";
-import { ALERTS } from "./NewAccount.contants"
+import { useSignIn } from "./SignIn.useSignIn";
+import { ALERTS } from "./SignIn.constants"
 
 const InputWrapper = styled.div`
  padding: ${tokens.spacing.s} 0;
 `;
-
-const Base = styled.div`
- height: 100%;
- min-height: 100vh;
-`;
-
 
 
 export const SignIn = ()=> {
     const {
         email,
         password,
-        confirmPassword,
         setEmail,
         setPassword,
-        setConfirmPassword,
-        createAccount,
-        allert,
-    } = useNewAccount();
+        signIn,
+        alert,
+    } = useSignIn();
 
-    const isResting = alert !== "creating";
+    const isResting = alert !== "checking";
 
     return (
-        <Base>
+        
         <Layout
         form
-        title="New Account"
+        title="Sign In"
         alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
-        primary={["Create Account", isResting &&
+        primary={["Sign In", isResting &&
         createAccount]}
         >
             <InputWrapper>
@@ -50,9 +42,19 @@ export const SignIn = ()=> {
             />
             </InputWrapper>
 
+            <InputWrapper>
+            <Input
+            value={password}
+            label="Password"
+            accepts="passwords"
+            onChange={isResting && setPassword}
+            />
+            </InputWrapper>
+
+
         </Layout>
-        </Base>
-    )
-}
+        
+    );
+};
 
 export default SignIn;
