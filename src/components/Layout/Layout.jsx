@@ -1,10 +1,11 @@
-import { Title } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { tokens } from "../../data/tokens";
 import { Text } from "../Text";
 import { Button } from "../Button";
 import { Link } from "../Link";
+import { Title } from "@material-ui/icons";
+
 
 const COLORS = {
   white: `rgb(${tokens.colors.white})`,
