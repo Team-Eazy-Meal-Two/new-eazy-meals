@@ -1,17 +1,17 @@
-import { Title } from "@material-ui/icons";
 import React from "react";
 import styled from "styled-components";
 import { tokens } from "../../data/tokens";
 import { Text } from "../Text";
 import { Button } from "../Button";
 import { Link } from "../Link";
+import { Title } from "@material-ui/icons";
 
 
 const COLORS = {
   white: `rgb(${tokens.colors.white})`,
   green: `rgb(${tokens.colors.green})`,
-    whiteStronger: `rgb(${tokens.colors.white}),${tokens.opacity.stronger}`,
-  blackStrong: `rgb(${tokens.colors.black}),${tokens.opacity.strong}`
+  whiteStronger: `rgb(${tokens.colors.white}),${tokens.opacity.stronger}`,
+  blackStrong: `rgb(${tokens.colors.black}),${tokens.opacity.strong}`,
 };
 
 const Base = styled.div`
@@ -24,6 +24,8 @@ const Base = styled.div`
 background: ${({ inverse }) => (inverse ? COLORS.whiteStronger : COLORS.blackStrong)}}
 min-height :100vh
 
+  background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)};
+  color: ${({ inverse }) => (inverse ? COLORS.whiteStronger : COLORS.blackStrong)};
   `;
 
 const Content = styled.div`
@@ -92,7 +94,9 @@ export const Layout = (props) => {
 
         {primary && (
           <ButtonWrap>
-            <Button action ={primary[1]} inverse={inverse} full importance ='primary'>{primary[0]} </Button>
+            <Button inverse={inverse} full importance="primary">
+              123
+            </Button>
           </ButtonWrap>
         )}
 

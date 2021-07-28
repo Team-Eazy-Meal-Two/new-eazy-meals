@@ -22,7 +22,6 @@ const StyledTextField = styled(TextField)`
  */
 
 /**
- * 
  * @param {props} props 
  * @returns {JSX.Element}
  */
