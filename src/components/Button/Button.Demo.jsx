@@ -18,32 +18,28 @@ export const Demo = () => {
       </div>
 
       <div>
-        <Button importance="secondary" full inverse>
-          Hello World{" "}
-        </Button>
+        <Button importance="secondary" full>Hello World </Button>
       </div>
 
       <div>
-        <Button importance="primary">Hello World </Button>
+        <Button importance="primary">Hello World</Button>
       </div>
+
       <DarkBg>
+
+      <div>
+        <Button importance="secondary" inverse>Hello World </Button>
+      </div>
+
         <div>
-          <Button importance="secondary" inverse>
-            Hello World{" "}
-          </Button>
+          <Button importance="secondary" full inverse>Hello World</Button>
         </div>
 
         <div>
-          <Button importance="secondary" full inverse>
-            Hello World{" "}
-          </Button>
+          <Button importance="primary"  inverse>Hello World</Button>
         </div>
 
-        <div>
-          <Button importance="primary" inverse>
-            Hello World{" "}
-          </Button>
-        </div>
+       
       </DarkBg>
     </div>
   );
