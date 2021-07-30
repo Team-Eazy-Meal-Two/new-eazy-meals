@@ -30,8 +30,9 @@ export const NewAccount = () => {
   return (
     <Base>
       <Layout
+        form
         title="New Acount"
-        alert={alert}
+        alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
         primary={["Create Account", isResting && createAccount]}
       >
@@ -40,7 +41,7 @@ export const NewAccount = () => {
             value={email}
             label="Email"
             accepts="email"
-            onChange={setEmail}
+            onChange={isResting && setEmail}
           />
         </InputWrapper>
 
@@ -49,7 +50,7 @@ export const NewAccount = () => {
             value={password}
             label="Password"
             accepts="password"
-            onChange={setPassword}
+            onChange={isResting && setPassword}
           />
         </InputWrapper>
 
@@ -58,7 +59,7 @@ export const NewAccount = () => {
             value={confirmPassword}
             label=" Confirm Password"
             accepts="password"
-            onChange={setconfirmPassword}
+            onChange={isResting && setconfirmPassword}
           />
         </InputWrapper>
       </Layout>

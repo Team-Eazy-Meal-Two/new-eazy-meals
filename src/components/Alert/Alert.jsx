@@ -50,7 +50,7 @@ export const Alert = ( props ) => {
    return (
     
     <StyledAlert severity={severity} icon={icon}>
-      <Text size="m">{title}</Text>
+      <Text size={ description ?"l":"m"}>{title}</Text>
       {description && (
         <DescriptionWrap>
           <Text size="s">{description}</Text>{" "}

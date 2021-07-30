@@ -33,9 +33,11 @@ export const Input = (props) => {
     <StyledTextField
     value={value}
     label ={label}
+    {...props}
+    disabled={onChange}
     onChange={handleChange}
       fullWidth
-    InputProps={{type:accepts}}
+    InputProps={{accepts}}
       variant="filled"
     />
   );
