@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { users } from "../../api/users";
-import { useitemsList } from "./ItemsList.useItemsList";
+import { useItemsList } from "./ItemsList.useItemsList";
+import {useHistory} from "react-router-dom"
 
 export const ItemsList = () => {
-  const { current } = useitemsList();
+  const history = useHistory();
+  const { current } = useItemsList();
 
   return (
     <div>
