@@ -1,25 +1,68 @@
-import React from 'react'
-import {Layout} from '../../components/Layout'
-import{ Input} from '../../components/Input'
-import { tokens} from '../../data/tokens'
-import {useNewAccount}from './NewAcount.useNewAccount'
+import React from "react";
+import { Layout } from "../../components/Layout";
+import { Input } from "../../components/Input";
+import styled from "styled-components";
+import { tokens } from "../../data/tokens";
+import { useNewAccount } from "./NewAcount.useNewAccount";
+import { ALERTS } from "./NewAccount.constants";
 
+export const NewAccount = () => {
+  const InputWrapper = styled.div`
+    padding: ${tokens.spacing.s};
+  `;
 
-export const NewAccount =()=>{
-    const { email,password,confirmPassword,setEmail,setPassword,setconfirmPassword}=useNewAccount()
-    return (
-        <Layout
-        title='New Acount'
-        secondary={['Cancel','/']}
-        primary ={['Create Account',()=> console.log('asssd')]}
+  const Base = styled.div`
+    height: 100%;
+    min-height: 100vh;
+  `;
 
-        >
-        <Input Label='Email'type ='email'/>
-        <Input Label='Password' type= 'password'/>
-        <Input Label=' Confirm Password' type= 'ConfimPassword'/>
+  const {
+    email,
+    password,
+    confirmPassword,
+    setEmail,
+    setPassword,
+    setconfirmPassword,
+    createAccount,
+    alert,
+  } = useNewAccount();
+  const isResting = alert !== "creating";
+  return (
+    <Base>
+      <Layout
+        title="New Acount"
+        alert={alert}
+        secondary={["Cancel", isResting && "/"]}
+        primary={["Create Account", isResting && createAccount]}
+      >
+        <InputWrapper>
+          <Input
+            value={email}
+            label="Email"
+            accepts="email"
+            onChange={setEmail}
+          />
+        </InputWrapper>
 
-        </Layout>
+        <InputWrapper>
+          <Input
+            value={password}
+            label="Password"
+            accepts="password"
+            onChange={setPassword}
+          />
+        </InputWrapper>
 
-    )
-}
-    export default NewAccount;
+        <InputWrapper>
+          <Input
+            value={confirmPassword}
+            label=" Confirm Password"
+            accepts="password"
+            onChange={setconfirmPassword}
+          />
+        </InputWrapper>
+      </Layout>
+    </Base>
+  );
+};
+export default NewAccount;

@@ -38,9 +38,22 @@ const calcHover = ({ importance, inverse }) => {
 };
 
 const calcActionProps = (action) => {
+  if (action === true) {
+    return {
+      type: "submit"
+    };
+  }
+
+  if (!action) {
+    return {
+      disabled: true,
+      type: "button"
+    };
+  }
   if (typeof action !== "string")
-    return { component: "button", onclick: action };
-  return { component: Link, to: action };
+    return { component: "button", onClick: action, type: "button" };
+
+  return { component: Link, to: action, type: "button" };
 };
 
 const StyledButton = styled(MuiButton)`
@@ -81,7 +94,7 @@ export const Button = (props) => {
       children={children}
       {...actionProps}
       fullWidth={full}
-       inverse={inverse}
+      inverse={inverse}
       variant={variant}
     />
   );
