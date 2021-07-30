@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Layout } from "../../components/Layout";
-import { Input } from "../../components/Inputs";
+import { Input } from "../../components/Input";
 import { tokens } from "../../data/tokens";
 import { useSignIn } from "./SignIn.useSignIn";
 import { ALERTS } from "./SignIn.constants"

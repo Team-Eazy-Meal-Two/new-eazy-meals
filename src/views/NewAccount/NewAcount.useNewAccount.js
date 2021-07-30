@@ -1,6 +1,7 @@
 import { Email } from "@material-ui/icons";
 import { useState } from "react";
 import validator from "validator";
+import { users } from '../../api/users';
 
 export const useNewAccount = () => {
   const [email, setEmail] = useState("");
