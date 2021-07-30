@@ -14,6 +14,7 @@ import {LandingPage} from "../../views/LandingPage";
 import {NewAccount} from "../../views/NewAccount";
 import {ResetPassword} from "../../views/ResetPassword";
 import {SignIn} from "../../views/SignIn";
+import ItemsList from "../../views/ItemsList";
 
 
 const Demos = ()=>{
@@ -72,6 +73,17 @@ const Auth = ()=>{
   );
 }
 
+const Items = () => {
+  return (
+    <Switch>
+      <Route path="/items/list">
+        < ItemsList/>
+      </Route>
+      </Switch>
+   
+  );
+
+}
 
 export const Routing = () => {
   return (
@@ -83,6 +95,10 @@ export const Routing = () => {
 
         <Route path="/auth">
           <Auth />
+        </Route>
+
+        <Route path="/items">
+          <Items />
         </Route>
 
         <Route path="/">
