@@ -1,5 +1,7 @@
 import React from "react";
-import { Switch, Route, HashRouter } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
+import { useApp } from './App.useApp';
+
 
 import { Demo as ButtonDemo } from "../Button/Button.Demo";
 import { Demo as CheckboxDemo } from "../Checkbox/Checkbox.Demo";
@@ -14,8 +16,8 @@ import {LandingPage} from "../../views/LandingPage";
 import {NewAccount} from "../../views/NewAccount";
 import {ResetPassword} from "../../views/ResetPassword";
 import {SignIn} from "../../views/SignIn";
+import { EmailSent } from "../../views/EmailSent";
 import ItemsList from "../../views/ItemsList";
-
 
 const Demos = ()=>{
   return (
@@ -69,6 +71,10 @@ const Auth = ()=>{
       <Route path="/auth/reset">
         <ResetPassword />
       </Route>
+
+      <Route path="/auth/sent">
+        <EmailSent />
+      </Route>
     </Switch>
   );
 }
@@ -86,8 +92,13 @@ const Items = () => {
 }
 
 export const Routing = () => {
+  const { checking } = useApp();
+
+  if (checking){
+    return null;
+  }
   return (
-    <HashRouter>
+   
       <Switch>
         <Route path="/demo">
           <Demos />
@@ -105,7 +116,7 @@ export const Routing = () => {
           <LandingPage />
         </Route>
       </Switch>
-    </HashRouter>
+    
   );
 };
 export default Routing;
