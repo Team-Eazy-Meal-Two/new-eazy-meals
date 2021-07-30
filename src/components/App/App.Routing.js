@@ -8,12 +8,13 @@ import { Demo as InputDemo } from "../Input/Input.Demo";
 import { Demo as LayoutDemo } from "../Layout/Layout.Demo";
 import { Demo as LinkDemo } from "../Link/Link.Demo";
 import { Demo as TextDemo } from "../Text/Text.Demo";
-// import {Demo as AlertDemo} from "../Text/Alert.Demo";
+import {Demo as AlertDemo} from "../Alert/Alert.Demo"
 
 import {LandingPage} from "../../views/LandingPage";
 import {NewAccount} from "../../views/NewAccount";
 import {ResetPassword} from "../../views/ResetPassword";
 import {SignIn} from "../../views/SignIn";
+import ItemsList from "../../views/ItemsList";
 
 
 const Demos = ()=>{
@@ -46,6 +47,10 @@ const Demos = ()=>{
       <Route path="/demo/text">
         <TextDemo />
       </Route>
+
+      <Route path="/demo/alert">
+        <AlertDemo />
+      </Route>
     </Switch>
   );
 }
@@ -68,6 +73,17 @@ const Auth = ()=>{
   );
 }
 
+const Items = () => {
+  return (
+    <Switch>
+      <Route path="/items/list">
+        < ItemsList/>
+      </Route>
+      </Switch>
+   
+  );
+
+}
 
 export const Routing = () => {
   return (
@@ -79,6 +95,10 @@ export const Routing = () => {
 
         <Route path="/auth">
           <Auth />
+        </Route>
+
+        <Route path="/items">
+          <Items />
         </Route>
 
         <Route path="/">

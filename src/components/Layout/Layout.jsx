@@ -5,6 +5,8 @@ import { Text } from "../Text";
 import { Button } from "../Button";
 import { Link } from "../Link";
 import { Title } from "@material-ui/icons";
+import { Alert } from "../Alert";
+import { useHistory } from "react-router-dom";
 
 const COLORS = {
   white: `rgb(${tokens.colors.white})`,
@@ -19,8 +21,13 @@ const Base = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)};
-  color: ${({ inverse }) => (inverse ? COLORS.whiteStronger : COLORS.blackStrong)};
+  background: ${({ inverse }) =>
+    inverse ? COLORS.whiteStronger : COLORS.blackStrong}}
+  width:100%;
+  max-width:30rem;
+  max-height:45rem;
+  padding:${tokens.spacing.xl};
+
   `;
 
 const Content = styled.div`
@@ -32,7 +39,7 @@ const Nested = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; ;
 `;
 
 const ButtonWrap = styled.div`
@@ -42,10 +49,27 @@ const ButtonWrap = styled.div`
 const LinkWrap = styled.div`
   padding: ${tokens.spacing.m} ${tokens.spacing.xs} ${tokens.spacing.xs};
 `;
+const NestedChildren = styled.div`
+  width: 100%;
+  padding: ${tokens.spacing.l}0;
+`;
+const BaseWrap = styled.div`
+background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)}}
+  min-height:100vh;
+  display: flex;
+  align-items:center;
+  justify-content:center;
+};
+`;
+const AlertWrap = styled.div`
+  padding-bottom: ${tokens.spacing.m};
+`;
+
 /**
  * @typedef {object} props
  * @property {JSX.Element} children
  * @property {string} title
+ * @property {boolean} form
  * @property {boolean} inverse
  * @property {[string, string | function]} [primary]
  *  @property {[string, string | function]} [secondary]
@@ -58,45 +82,74 @@ const LinkWrap = styled.div`
  */
 
 export const Layout = (props) => {
-  const { children, title, inverse, extra, primary, secondary } = props;
+  const { children, title, inverse, extra, primary, secondary, alert, form } =
+    props;
+
+  const history = useHistory();
+
+  const handleForm = (event) => {
+    event.preventDefault();
+    if (typeof primary[1] === "string") {
+      return history.to(primary[1]());
+    }
+    primary[1]();
+  };
+
   return (
-    <Base inverse={inverse}>
-      <header>
-        <Text inverse={inverse} size="xl" component="h1">
-          {title}
-        </Text>
-      </header>
+    <BaseWrap inverse={inverse}>
+      <Base>
+        <header>
+          <Text inverse={inverse} size="xl" component="h1">
+            {title}
+          </Text>
+        </header>
+        <main>
+          <Content
+            as={form ? "form" : "div"}
+            onSubmit={form ? handleForm : undefined}
+          >
+            <Nested>
+              <NestedChildren>{children} </NestedChildren>
+            </Nested>
 
-      <Content>
-        <Nested>
-          <div>{children}</div>
-        </Nested>
+            {alert && (
+              <AlertWrap>
+                <Alert {...alert} />
+              </AlertWrap>
+            )}
 
-        {secondary && (
-          <ButtonWrap>
-            <Button inverse={inverse} full>
-              123
-            </Button>
-          </ButtonWrap>
-        )}
+            {secondary && (
+              <ButtonWrap>
+                <Button action={secondary[1]} inverse={inverse} full>
+                  {secondary[0]}
+                </Button>
+              </ButtonWrap>
+            )}
 
-        {primary && (
-          <ButtonWrap>
-            <Button inverse={inverse} full importance="primary">
-              123
-            </Button>
-          </ButtonWrap>
-        )}
+            {primary && (
+              <ButtonWrap>
+                <Button
+                  inverse={inverse}
+                  action={primary[1]}
+                  full
+                  importance="primary"
+                >
+                  {primary[0]}
+                </Button>
+              </ButtonWrap>
+            )}
 
-        {extra && (
-          <LinkWrap>
-            <Link inverse={inverse} full>
-              123
-            </Link>
-          </LinkWrap>
-        )}
-      </Content>
-    </Base>
+            {extra && (
+              <LinkWrap>
+                <Link action={extra[1]} inverse={inverse} full>
+                  {extra[0]}
+                </Link>
+              </LinkWrap>
+            )}
+          </Content>
+        </main>
+      </Base>
+    </BaseWrap>
   );
 };
 export default Layout;
