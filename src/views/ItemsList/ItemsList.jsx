@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { users } from "../../api/users";
 import { useItemsList } from "./ItemsList.useItemsList";
 import {useHistory} from "react-router-dom"

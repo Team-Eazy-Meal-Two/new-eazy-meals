@@ -14,7 +14,11 @@ const createUsersApi = () => {
             innerDb.createObjectStore('meta', {keyPath: 'id'})
         }
     });
-
+/**
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise<[boolean, null |'notAccount' | 'technical']>}
+ */
     const signIn = async (email, password) => {
         try {
         const db = await dbRequest;
@@ -23,7 +27,7 @@ const createUsersApi = () => {
         await db.put('meta', { id: 'current', value: id });
         await db.put('data', { id: id });
      
-        return [true]
+        return [true, null]
     } catch(error) {
         const errorAsString = error.toString();
 
@@ -36,7 +40,28 @@ const createUsersApi = () => {
         return [false, "techinal"];
     }
 };
+/**
+ * @param {string} token 
+ * @returns {Promise<[boolean, null | 'technical']>}
+ */
+    const signInWithToken = async (token) => {
+        try {
+        const db = await dbRequest;
+        const { id } = await auth.confirm(token);
 
+        await db.put('meta', { id: 'current', value: id });
+        await db.put('data', { id: id });
+     
+        return [true, null]
+    } catch(error) {
+         return [false, "techinal"];
+    }
+};
+/**
+ * @param {string} email 
+ * @param {string} password 
+ * @returns {Promise<[boolean, null |'emailAlreadyUsed' | 'technical']>}
+ */
     const createAccount = async (email, password) => {
         try{
             const db = await dbRequest;
@@ -46,7 +71,7 @@ const createUsersApi = () => {
             await db.put('data', { id: id });
 
             await signIn(email, password)
-            return [true]
+            return [true, null]
         } catch(error) {
           const errorAsString = error.toString();
         
@@ -60,7 +85,9 @@ const createUsersApi = () => {
     
         };
             
-    
+    /**
+     * @returns {Promise<null | { id: string}>}
+     */
 
 
     const getCurrent = async () => {
@@ -73,26 +100,33 @@ const createUsersApi = () => {
          const response = await db.get('data', current.value);
         return response;
     }
-
+/** 
+     * @returns {Promise<{ id: string}[]>}
+     */
     const getUsers = async () => {
-
-    }
-
-    const signOff = async () => {
         const db = await dbRequest;
-
+        return await db.getAll('data');
+    }
+    /**
+     * @returns {Promise<[boolean, null | 'technical']>}
+     */
+    const signOff = async () => {
+       try{
+        const db = await dbRequest;
         await db.put('meta', { id: 'current', value: null })
-
-        return [true];
-
+        return [true, null];
+       } catch (error){
+           return [false, 'technical']
+       }
     };
-
+ 
    
     return {
         getCurrent,
         getUsers,
         createAccount,
         signIn,
+        signInWithToken,
         signOff,
     }
 };

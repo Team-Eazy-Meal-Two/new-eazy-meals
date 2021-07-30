@@ -2,6 +2,7 @@ import React from "react";
 import { createGlobalStyle } from "styled-components";
 import { CssBaseline } from "@material-ui/core";
 import { StylesProvider } from "@material-ui/core/styles";
+import { HashRouter } from "react-router-dom";
 import { Routing } from "./App.Routing";
 
 const Global = createGlobalStyle`
@@ -26,7 +27,9 @@ export const App = () => {
     <StylesProvider injectFirst>
       <CssBaseline />
       <Global />
+      <HashRouter>
       <Routing />
+      </HashRouter>
     </StylesProvider>
   );
 };
