@@ -11,10 +11,10 @@ export const useNewAccount = () => {
   
 
   const createAccount = () => {
-    if (!email || email.length < 1) return "noEmail";
-    if (!password || password.length < 1) return "noPassword";
+    if (!email || email.length < 1) return setAlert("noEmail") ;
+    if (!password || password.length < 1) return setAlert("noPassword");
     if (!confirmPassword || confirmPassword.length < 1)
-      return "noConfirmPassword ";
+      return setAlert("noConfirmPassword ") ;
 
     if (!validator.isEmail(email)) return setAlert("formatEmail");
     if (password.length < 8) return setAlert("ShortPassword");
@@ -31,7 +31,8 @@ export const useNewAccount = () => {
     setEmail,
     setPassword,
     setconfirmPassword,
-    createAccount
+    createAccount,
+    alert
   };
 };
 export default useNewAccount;
