@@ -12,7 +12,7 @@ const COLORS = {
   greenSubtler: `rgba(${tokens.colors.green}), ${tokens.opacity.subtler}`,
   greenStronger: `rgba(${tokens.colors.green}), ${tokens.opacity.stronger}`,
   whiteSubtler: `rgba(${tokens.colors.white}), ${tokens.opacity.subtler}`,
-  whiteStronger: `rgba(${tokens.colors.white}), ${tokens.opacity.subtler}`,
+  whiteStronger: `rgba(${tokens.colors.white}), ${tokens.opacity.stronger}`,
 };
 
 const calcBackground = ({ importance, inverse }) => {
@@ -22,7 +22,7 @@ const calcBackground = ({ importance, inverse }) => {
 };
 const calcColor = ({ importance, inverse }) => {
   if (importance === "primary" && inverse) return COLORS.green;
-  if (inverse || importance === "secondary") return COLORS.white;
+  if (inverse || importance === "primary") return COLORS.white;
   return COLORS.green;
 };
 const calcBorder = ({ importance, inverse }) => {
@@ -38,9 +38,22 @@ const calcHover = ({ importance, inverse }) => {
 };
 
 const calcActionProps = (action) => {
+  if (action === true) {
+    return {
+      type: "submit"
+    };
+  }
+
+  if (!action) {
+    return {
+      disabled: true,
+      type: "button"
+    };
+  }
   if (typeof action !== "string")
-    return { component: "button", onclick: action };
-  return { component: Link, to: action };
+    return { component: "button", onClick: action, type: "button" };
+
+  return { component: Link, to: action, type: "button" };
 };
 
 const StyledButton = styled(MuiButton)`
@@ -66,16 +79,22 @@ const StyledButton = styled(MuiButton)`
  */
 
 export const Button = (props) => {
-  const { children, inverse, importance = "secondary", action, full = false } = props;
+  const {
+    children,
+    inverse,
+    importance = "secondary",
+    action,
+    full = false,
+  } = props;
   const variant = importance === "primary" ? "contained" : "outlined";
   const actionProps = calcActionProps(action);
   return (
     <StyledButton
-    inverse={inverse}
       importance={importance}
       children={children}
       {...actionProps}
       fullWidth={full}
+      inverse={inverse}
       variant={variant}
     />
   );
