@@ -19,8 +19,8 @@ const Base = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)}}
-background: ${({ inverse }) => (inverse ? COLORS.whiteStronger : COLORS.blackStrong)}}
+  background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)}};
+background: ${({ inverse }) => (inverse ? COLORS.whiteStronger : COLORS.blackStrong)}};
 
   `;
 
