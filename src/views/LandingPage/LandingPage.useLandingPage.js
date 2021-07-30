@@ -7,7 +7,7 @@ export const useLandingPage = () => {
     const [checking, setChecking] = useState(true)
 
     useEffect(() => {
-        users.getCurrent().then(response =>{
+        users.getCurrent().then(response => { 
             if (!response) return setChecking(false)
             history.push('/items/list')
              
