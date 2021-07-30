@@ -13,6 +13,7 @@ const SEREVITY_MAP = {
 
 const StyledAlert = styled(MuiAlert)`
   align-items: center;
+  text-align:left;
 `;
 const DescriptionWrap = styled.div`
   padding-top: ${tokens.spacing.s};
@@ -37,14 +38,14 @@ export const Alert = ( props ) => {
   const icon =  nature === "resolving" ? (
       <CircularProgress size={20} thickness={6} />
     ) : undefined;
-  // 
-  // if (!description) {
-  //   return (
-  //     <MuiAlert severity={severity} icon={icon}>
-  //       {title}
-  //     </MuiAlert>
-  //   );
-  // }
+  
+  if (!description) {
+    return (
+      <MuiAlert severity={severity} icon={icon}>
+        {title}
+      </MuiAlert>
+    );
+  }
 
    return (
     

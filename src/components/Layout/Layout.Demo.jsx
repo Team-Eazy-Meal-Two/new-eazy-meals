@@ -1,6 +1,7 @@
 import React from "react";
 import { Layout } from "./Layout";
 import styled from "styled-components";
+import { Description } from "@material-ui/icons";
 
 const Wrapper = styled.div`
   border: 1px dotted blue;
@@ -40,10 +41,10 @@ export const Demo = () => {
         </Layout>
       </Wrapper>
 
-
-
-            <Wrapper>
-        <Layout inverse title="Hello World">Hello World!</Layout>
+      <Wrapper>
+        <Layout inverse title="Hello World">
+          Hello World!
+        </Layout>
       </Wrapper>
       <Wrapper>
         <Layout inverse title="Hello World" primary={["primary", "#"]}>
@@ -53,7 +54,7 @@ export const Demo = () => {
 
       <Wrapper>
         <Layout
-        inverse
+          inverse
           title="Hello World"
           primary={["primary", "#"]}
           secondary={["secondary", "#"]}
@@ -61,14 +62,47 @@ export const Demo = () => {
           Hello World!
         </Layout>
       </Wrapper>
-
       <Wrapper>
         <Layout
-        inverse
           title="Hello World"
           primary={["primary", "#"]}
           secondary={["secondary", "#"]}
           extra={["extra", "#"]}
+          alert={{
+            title: "Hello",
+            nature: "resolving",
+          }}
+        >
+          Hello World!
+        </Layout>
+      </Wrapper>
+      <Wrapper>
+        <Layout
+          title="Hello World"
+          primary={["primary", "#"]}
+          secondary={["secondary", "#"]}
+          extra={["extra", "#"]}
+          alert={{
+            title: "Hello",
+            nature: "error",
+            description: "lorem ipsum",
+          }}
+        >
+          Hello World!
+        </Layout>
+      </Wrapper>
+
+      <Wrapper>
+        <Layout
+          title="Hello World"
+          primary={["primary", "#"]}
+          secondary={["secondary", "#"]}
+          extra={["extra", "#"]}
+          alert={{
+            title: "Hello",
+            nature: "error",
+            description: "lorem ipsum",
+          }}
         >
           Hello World!
         </Layout>
