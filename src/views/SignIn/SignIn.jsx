@@ -32,8 +32,8 @@ export const SignIn = ()=> {
         title="Sign In"
         alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
-        primary={["Sign In", isResting &&
-        createAccount]}
+        primary={["Sign In", isResting && signIn]}
+        extra={['Forgot Password?', isResting && '/auth/reset']}
         >
             <InputWrapper>
             <Input

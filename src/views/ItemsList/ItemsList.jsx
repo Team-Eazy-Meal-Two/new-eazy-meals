@@ -1,17 +1,14 @@
-import React from "react";
-import { users } from "../../api/users";
-import { useItemsList } from "./ItemsList.useItemsList";
-import {useHistory} from "react-router-dom"
+import React, { useContext} from "react";
+import { context as authContext } from "../../hooks/useAuth";
 
 export const ItemsList = () => {
-  const history = useHistory();
-  const { current } = useItemsList();
+  const { user, signOut } = useContext(authContext);
 
   return (
     <div>
-      <div>Logged In: {JSON.stringify(current)}</div>
+      <div>Logged In: {user ? JSON.stringify(user) : 'NO USER'}</div>
 
-      <button onClick={users.signOff().then(() => history.push("/"))}>
+      <button onClick={signOut}>
         LOG OUT
       </button>
     </div>
