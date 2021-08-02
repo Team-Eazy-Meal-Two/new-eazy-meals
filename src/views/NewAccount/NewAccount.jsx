@@ -30,7 +30,7 @@ export const NewAccount = () => {
   return (
     <Base>
       <Layout
-        form
+      
         title="New Acount"
         alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
@@ -47,6 +47,7 @@ export const NewAccount = () => {
 
         <InputWrapper>
           <Input
+          type='text'
             value={password}
             label="Password"
             accepts="password"

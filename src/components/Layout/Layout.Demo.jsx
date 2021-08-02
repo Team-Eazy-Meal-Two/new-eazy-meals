@@ -32,6 +32,7 @@ export const Demo = () => {
 
       <Wrapper>
         <Layout
+        inverse
           title="Hello World"
           primary={["primary", "#"]}
           secondary={["secondary", "#"]}
@@ -64,6 +65,7 @@ export const Demo = () => {
       </Wrapper>
       <Wrapper>
         <Layout
+        inverse
           title="Hello World"
           primary={["primary", "#"]}
           secondary={["secondary", "#"]}
@@ -78,6 +80,7 @@ export const Demo = () => {
       </Wrapper>
       <Wrapper>
         <Layout
+        
           title="Hello World"
           primary={["primary", "#"]}
           secondary={["secondary", "#"]}
