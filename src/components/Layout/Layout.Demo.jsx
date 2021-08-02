@@ -1,7 +1,6 @@
 import React from "react";
 import { Layout } from "./Layout";
 import styled from "styled-components";
-import { Description } from "@material-ui/icons";
 
 const Wrapper = styled.div`
   border: 1px dotted blue;
