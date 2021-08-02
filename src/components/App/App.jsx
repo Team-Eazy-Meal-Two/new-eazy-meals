@@ -12,7 +12,7 @@ html{
   height:100%;
 }
 body{
-  overflow-x: hidden;
+overflow-x: hidden;
 overflow-y: scroll;
 min-height:100vh;
 height:100%;
