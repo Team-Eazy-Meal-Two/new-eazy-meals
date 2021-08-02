@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Switch, Route } from "react-router-dom";
-import { useApp } from './App.useApp';
+import { context as authContext } from '../../hooks/useAuth';
 
 
 import { Demo as ButtonDemo } from "../Button/Button.Demo";
@@ -92,9 +92,9 @@ const Items = () => {
 }
 
 export const Routing = () => {
-  const { checking } = useApp();
+  const { loading, user } = useContext(authContext);
 
-  if (checking){
+  if (loading){
     return null;
   }
   return (
@@ -104,16 +104,19 @@ export const Routing = () => {
           <Demos />
         </Route>
 
-        <Route path="/auth">
-          <Auth />
+        <Route path="/items">
+          {user ? <Items /> :  <LandingPage />}
         </Route>
 
-        <Route path="/items">
-          <Items />
+        <Route path="/auth">
+        
+          { user ? <ItemsList /> : <Auth />}
         </Route>
 
         <Route path="/">
-          <LandingPage />
+        { user ? <ItemsList /> : <LandingPage />}
+
+          
         </Route>
       </Switch>
     

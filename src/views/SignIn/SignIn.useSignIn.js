@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import validator from "validator";
- import { users } from "../../api/users";
-import { useHistory } from "react-router-dom";
+import { context as authContext } from "../../hooks/useAuth";
 
 export const useSignIn = () => {
-  const history = useHistory();
+  const { signIn: authSignIn } = useContext(authContext)
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState(null);
@@ -19,12 +19,11 @@ export const useSignIn = () => {
 
 
       setAlert('checking')
-      const [success, code] = await users.signIn(email, password)
+      const [success, code] = await authSignIn(email, password)
 
       if (!success) {
           return setAlert(code)
       }
-      history.push('/items/list')
   };
 
   return {

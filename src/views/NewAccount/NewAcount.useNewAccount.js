@@ -1,16 +1,18 @@
-import { Email } from "@material-ui/icons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import validator from "validator";
-import { users } from '../../api/users';
+import { useHistory } from "react-router-dom";
+import { context as authContext } from "../../hooks/useAuth";
 
 export const useNewAccount = () => {
+  const { createAccount: authCreatAccount } = useContext(authContext)
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [alert, setAlert] = useState(null);
   
 
-  const createAccount = () => {
+  const createAccount = async () => {
     if (!email || email.length < 1) return setAlert("noEmail") ;
     if (!password || password.length < 1) return setAlert("noPassword");
     if (!confirmPassword || confirmPassword.length < 1)
@@ -23,6 +25,13 @@ export const useNewAccount = () => {
     if (password !== confirmPassword)
       return setAlert("misMatchConfirmPassword");
       setAlert('creating')
+
+      const [success, code] = await authCreatAccount(email, password)
+
+      if (!success){
+        return setAlert(code)
+      }
+      history.push('/auth/sent')
   };
   return {
     email,
