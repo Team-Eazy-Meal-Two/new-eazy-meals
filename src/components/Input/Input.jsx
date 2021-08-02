@@ -28,7 +28,7 @@ const StyledTextField = styled(TextField)`
 export const Input = (props) => {
   const { accepts,label,onChange ,value} = props;
 
-  const handleChange = (event) => onChange(event.target.value);
+  const handleChange = (event) =>onChange(event.target.value);
   return (
     <StyledTextField
     value={value}

@@ -28,7 +28,7 @@ export const ALERTS={
     },
     
     checking:{
-        title:'CHecking details',
+        title:'Checking details',
         nature: 'resolving'
 
     },
@@ -36,6 +36,12 @@ export const ALERTS={
         nature: 'error',
         title: 'Technical error',
         description: 'Something went wrong our side. Please try again later.'
+
+    },
+    notVerified: {
+        nature: 'error',
+        title: 'Email not verified',
+        description: 'An Account for this email has been created, but the email has not been verified yet. Please check your inbox and spam folder.'
 
     }
 

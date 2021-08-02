@@ -1,5 +1,7 @@
-import React from "react";
-import { Switch, Route, HashRouter } from "react-router-dom";
+import React, { useContext } from "react";
+import { Switch, Route } from "react-router-dom";
+import { context as authContext } from '../../hooks/useAuth';
+
 
 import { Demo as ButtonDemo } from "../Button/Button.Demo";
 import { Demo as CheckboxDemo } from "../Checkbox/Checkbox.Demo";
@@ -14,8 +16,8 @@ import {LandingPage} from "../../views/LandingPage";
 import {NewAccount} from "../../views/NewAccount";
 import {ResetPassword} from "../../views/ResetPassword";
 import {SignIn} from "../../views/SignIn";
+import { EmailSent } from "../../views/EmailSent";
 import ItemsList from "../../views/ItemsList";
-
 
 const Demos = ()=>{
   return (
@@ -62,12 +64,16 @@ const Auth = ()=>{
         <NewAccount />
       </Route>
 
-      <Route path="/auth/login">
+      <Route path="/auth/signin">
         <SignIn />
       </Route>
 
       <Route path="/auth/reset">
         <ResetPassword />
+      </Route>
+
+      <Route path="/auth/sent">
+        <EmailSent />
       </Route>
     </Switch>
   );
@@ -86,26 +92,34 @@ const Items = () => {
 }
 
 export const Routing = () => {
+  const { loading, user } = useContext(authContext);
+
+  if (loading){
+    return null;
+  }
   return (
-    <HashRouter>
+   
       <Switch>
         <Route path="/demo">
           <Demos />
         </Route>
 
-        <Route path="/auth">
-          <Auth />
+        <Route path="/items">
+          {user ? <Items /> :  <LandingPage />}
         </Route>
 
-        <Route path="/items">
-          <Items />
+        <Route path="/auth">
+        
+          { user ? <ItemsList /> : <Auth />}
         </Route>
 
         <Route path="/">
-          <LandingPage />
+        { user ? <ItemsList /> : <LandingPage />}
+
+          
         </Route>
       </Switch>
-    </HashRouter>
+    
   );
 };
 export default Routing;

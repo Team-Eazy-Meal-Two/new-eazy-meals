@@ -5,7 +5,6 @@ import { Input } from "../../components/Input";
 import { tokens } from "../../data/tokens";
 import { useSignIn } from "./SignIn.useSignIn";
 import { ALERTS } from "./SignIn.constants";
-import useNewAccount from "../NewAccount/NewAcount.useNewAccount"
 
 const InputWrapper = styled.div`
  padding: ${tokens.spacing.s} 0;
@@ -13,7 +12,6 @@ const InputWrapper = styled.div`
 
 
 export const SignIn = ()=> {
-    const {createAccount} = useNewAccount();
     const {
         email,
         password,
@@ -32,15 +30,15 @@ export const SignIn = ()=> {
         title="Sign In"
         alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
-        primary={["Sign In", isResting &&
-        createAccount]}
+        primary={["Sign In", isResting && signIn]}
+        extra={['Forgot Password?', isResting && '/auth/reset']}
         >
             <InputWrapper>
             <Input
             value={email}
             label="Email"
             accepts="email"
-            onchange={isResting && setEmail}
+            onChange={isResting && setEmail}
             />
             </InputWrapper>
 

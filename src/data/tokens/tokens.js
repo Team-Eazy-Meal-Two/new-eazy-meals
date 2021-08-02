@@ -82,6 +82,7 @@ export const images = {
 
 export const tokens = {
   spacing,
+  images,
   text,
   opacity,
   colors,
