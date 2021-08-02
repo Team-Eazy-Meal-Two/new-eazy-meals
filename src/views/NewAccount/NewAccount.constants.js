@@ -35,6 +35,7 @@ export const ALERTS={
 
     creating:{
         title:'Creating Account',
+        nature:'resolving'
 
     }
 

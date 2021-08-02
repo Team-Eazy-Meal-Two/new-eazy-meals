@@ -6,15 +6,18 @@ import { tokens } from "../../data/tokens";
 import { useNewAccount } from "./NewAcount.useNewAccount";
 import { ALERTS } from "./NewAccount.constants";
 
-export const NewAccount = () => {
-  const InputWrapper = styled.div`
-    padding: ${tokens.spacing.s};
-  `;
 
-  const Base = styled.div`
-    height: 100%;
-    min-height: 100vh;
-  `;
+const InputWrapper = styled.div`
+padding: ${tokens.spacing.s};
+`;
+
+const Base = styled.div`
+height: 100%;
+min-height: 100vh;
+`;
+
+export const NewAccount = () => {
+
 
   const {
     email,
