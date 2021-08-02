@@ -4,7 +4,6 @@ import { tokens } from "../../data/tokens";
 import { Text } from "../Text";
 import { Button } from "../Button";
 import { Link } from "../Link";
-import { Title } from "@material-ui/icons";
 import { Alert } from "../Alert";
 import { useHistory } from "react-router-dom";
 
@@ -21,8 +20,7 @@ const Base = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: ${({ inverse }) =>
-    inverse ? COLORS.whiteStronger : COLORS.blackStrong}}
+  background: ${({ inverse }) => inverse ? COLORS.whiteStronger : COLORS.blackStrong};
   width:100%;
   max-width:30rem;
   max-height:45rem;
@@ -54,12 +52,12 @@ const NestedChildren = styled.div`
   padding: ${tokens.spacing.l}0;
 `;
 const BaseWrap = styled.div`
-background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)}}
+background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)};
   min-height:100vh;
   display: flex;
   align-items:center;
   justify-content:center;
-};
+
 `;
 const AlertWrap = styled.div`
   padding-bottom: ${tokens.spacing.m};

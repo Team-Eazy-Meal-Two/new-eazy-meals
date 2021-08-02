@@ -87,6 +87,7 @@ export const tokens = {
   opacity,
   colors,
   radius,
+  highlights,
 };
 
 export default tokens;

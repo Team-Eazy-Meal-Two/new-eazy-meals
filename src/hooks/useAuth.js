@@ -6,14 +6,14 @@ import { useMount } from "react-use";
 const checkIfConfirm = async () => {
   const { hash } = window.location;
   if (!hash || !hash.startsWith("#confirmation_token")) return false;
-  const tokenValue = hash.replace(`/#\/confirmation_token=/`, "");
+  const tokenValue = hash.replace(`/#/confirmation_token=/`, "");
   const response = await users.signInWithToken(tokenValue);
   return response;
 };
 const checkIfRecover = async () => {
   const { hash } = window.location;
   if (!hash || !hash.startsWith("#recovery_token")) return false;
-  const tokenValue = hash.replace(`/#\/recovery_token=/`, "");
+  const tokenValue = hash.replace(`/#/recovery_token=/`, "");
   const response = await users.signInWithRecovery(tokenValue);
   return response;
 }
