@@ -64,7 +64,7 @@ const Auth = ()=>{
         <NewAccount />
       </Route>
 
-      <Route path="/auth/login">
+      <Route path="/auth/signin">
         <SignIn />
       </Route>
 
