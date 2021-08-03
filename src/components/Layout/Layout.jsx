@@ -20,11 +20,11 @@ const Base = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: ${({ inverse }) => inverse ? COLORS.whiteStronger : COLORS.blackStrong};
+  color: ${({ inverse }) => inverse ? COLORS.whiteStronger : COLORS.blackStrong};
   width:100%;
-  max-width:30rem;
+  max-width:25rem;
   max-height:45rem;
-  padding:${tokens.spacing.xl};
+  padding-bottom:${tokens.spacing.xl};
 
   `;
 
@@ -49,7 +49,7 @@ const LinkWrap = styled.div`
 `;
 const NestedChildren = styled.div`
   width: 100%;
-  padding: ${tokens.spacing.l}0;
+  padding: ${tokens.spacing.m} 0;
 `;
 const BaseWrap = styled.div`
 background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)};
@@ -88,7 +88,7 @@ export const Layout = (props) => {
   const handleForm = (event) => {
     event.preventDefault();
     if (typeof primary[1] === "string") {
-      return history.to(primary[1]());
+      return history.to(primary[1]);
     }
     primary[1]();
   };
