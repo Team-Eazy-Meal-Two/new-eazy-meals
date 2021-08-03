@@ -13,7 +13,7 @@ const SEREVITY_MAP = {
 
 const StyledAlert = styled(MuiAlert)`
   align-items: center;
-  text-align:left;
+  text-align: left;
 `;
 const DescriptionWrap = styled.div`
   padding-top: ${tokens.spacing.s};
@@ -32,31 +32,23 @@ const DescriptionWrap = styled.div`
  * @returns {JSX.Element}
  */
 
-export const Alert = ( props ) => {
-   const { nature ='validation',title, description } = props;
-   const severity = SEREVITY_MAP[nature];
-  const icon =  nature === "resolving" ? (
+export const Alert = (props) => {
+  const { nature = "validation", title, description } = props;
+  const severity = SEREVITY_MAP[nature];
+  const icon =
+    nature === "resolving" ? (
       <CircularProgress size={20} thickness={6} />
     ) : undefined;
-  
-  if (!description) {
-    return (
-      <MuiAlert severity={severity} icon={icon}>
-        {title}
-      </MuiAlert>
-    );
-  }
 
-   return (
-    
+  return (
     <StyledAlert severity={severity} icon={icon}>
-      <Text size={ description ?"l":"m"}>{title}</Text>
+      <Text size={description ? "l" : "s"}>{title}</Text>
       {description && (
         <DescriptionWrap>
           <Text size="s">{description}</Text>{" "}
         </DescriptionWrap>
       )}
     </StyledAlert>
-   );
+  );
 };
 export default Alert;

@@ -34,7 +34,7 @@ export const Input = (props) => {
     value={value}
     label ={label}
     // {...props}
-    // disabled={onChange}
+     disabled={onChange}
     onChange={handleChange}
       fullWidth
     InputProps={{type:accepts}}

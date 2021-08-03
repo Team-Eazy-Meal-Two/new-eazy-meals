@@ -29,11 +29,12 @@ export const NewAccount = () => {
     createAccount,
     alert,
   } = useNewAccount();
+  
   const isResting = alert !== "creating";
   return (
     <Base>
       <Layout
-      
+      form
         title="New Acount"
         alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
