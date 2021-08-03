@@ -2,7 +2,7 @@ import GoTrue from "gotrue-js";
 import { openDB } from "idb";
 
 const auth = new GoTrue({
-  APIUrl: "https://new-eazy-meals-app.netlify.app/.netlify/identity",
+  APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
   audience: "",
   setCookie: false,
 });
