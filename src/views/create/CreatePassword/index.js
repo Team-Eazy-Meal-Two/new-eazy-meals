@@ -1,0 +1,1 @@
+export {default,CreatePassword} from './CreatePassword'

@@ -2,10 +2,10 @@ import { useState, useContext } from "react";
 import validator from "validator";
 import { useHistory } from "react-router-dom";
 import GoTrue from "gotrue-js";
-import { context as authContext } from "../../hooks/useAuth";
+import { context as authContext } from "../../../hooks/useAuth";
 
 const auth = new GoTrue({
-  APIUrl:'https://new-eazy-meals-app.netlify.app/.netlify/identity',
+  APIUrl:'https://team-eazy-meals-two.netlify.app/.netlify/identity',
   audience:'',
   setCookie:false,
 
@@ -36,7 +36,7 @@ export const useNewAccount = () => {
       const response = await auth.signup(email,password);
       console.log(response)
 
-      const [success, code] = await authCreatAccount(email, password)
+      const [success, code] = await authCreatAccount(email, password).catch(error=> console.log(error))
 
       if (!success){
         return setAlert(code)

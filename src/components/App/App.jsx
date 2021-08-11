@@ -3,7 +3,7 @@ import { createGlobalStyle } from "styled-components";
 import { CssBaseline } from "@material-ui/core";
 import { StylesProvider } from "@material-ui/core/styles";
 import { HashRouter } from "react-router-dom";
-import { Routing } from "./App.Routing";
+ import { Routing } from "./App.Routing";
 import { Provider as AuthProvider } from "../../hooks/useAuth";
 
 const Global = createGlobalStyle`

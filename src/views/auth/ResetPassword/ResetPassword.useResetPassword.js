@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import validator from "validator";
 import { useHistory } from "react-router";
-import { context as authContext } from "../../hooks/useAuth";
+import { context as authContext } from "../../../hooks/useAuth";
 
 export const useResetPassword = () => {
   const { reset } = useContext(authContext);

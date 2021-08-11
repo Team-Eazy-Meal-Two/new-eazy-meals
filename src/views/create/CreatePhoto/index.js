@@ -1,0 +1,1 @@
+export {default,CreatePhoto} from'./CreatePhoto'

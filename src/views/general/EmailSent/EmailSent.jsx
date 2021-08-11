@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import {EmailOutlined as Icon} from '@material-ui/icons/';
-import { Layout } from "../../components/Layout";
-import { Text } from "../../components/Text";
-import { tokens } from "../../data/tokens";
+import { Layout } from "../../../components/Layout";
+import { Text } from "../../../components/Text";
+import { tokens } from "../../../data/tokens";
 
 const Content = styled.div`
   padding: 1rem;
