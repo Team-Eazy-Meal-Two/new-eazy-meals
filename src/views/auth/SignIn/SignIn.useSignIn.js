@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import validator from "validator";
-import { context as authContext } from "../../hooks/useAuth";
+import { context as authContext } from "../../../hooks/useAuth";
 
 export const useSignIn = () => {
   const { signIn: authSignIn } = useContext(authContext)

@@ -1,6 +1,6 @@
 import React from "react";
-import { Layout } from "../../components/Layout";
-import { Input } from "../../components/Input";
+import { Layout } from "../../../components/Layout";
+import { Input } from "../../../components/Input";
 import { useResetPassword } from "./ResetPassword.useResetPassword";
 import { ALERTS } from "./ResetPassword.constant";
 
