@@ -37,7 +37,7 @@ const calcHover = ({ importance, inverse }) => {
   return COLORS.greenSubtler;
 };
 
-const calcActionProps = (action) => {
+const calcActionProps = (action,detail) => {
   if (action === true) {
     return {
       type: "submit"
@@ -53,7 +53,7 @@ const calcActionProps = (action) => {
   if (typeof action !== "string")
     return { component: "button", onClick: action, type: "button" };
 
-  return { component: Link, to: action, type: "button" };
+  return { component: Link, to: {pathname:action,state:detail},type: "button" };
 };
 
 const StyledButton = styled(MuiButton)`
@@ -81,7 +81,7 @@ const StyledButton = styled(MuiButton)`
 export const Button = (props) => {
   const {
     children,
-    inverse,
+   inverse,
     importance = "secondary",
     action,
     full = false,

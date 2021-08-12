@@ -8,9 +8,14 @@ export const useCreateName = () => {
 
   const save = () => {
     if (!name || name.trim() === "") return setAlert("noName");
-    setAlert('saving')
-   history.push('/create/photo')
-  }
+    setAlert("saving");
+    history.push({
+      pathname: "/create/photo",
+      state: {
+        name
+      },
+    });
+  };
 
   return {
     name,
@@ -18,6 +23,6 @@ export const useCreateName = () => {
     alert,
     setAlert,
     save,
-  }
-}
+  };
+};
 export default useCreateName;
