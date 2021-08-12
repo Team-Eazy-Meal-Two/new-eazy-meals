@@ -20,8 +20,8 @@ export const CreateName = () => {
     <Layout
       title="New Account"
       form
-      primary={["Continue",save]}
-      secondary={["Cancel", "#"]}
+      primary={["Continue",save,{ name }]}
+      secondary={["Back", "/"]}
       alert={ALERTS[alert]}
     >
       <Text size="m">Provide a name to be associated with this account</Text>

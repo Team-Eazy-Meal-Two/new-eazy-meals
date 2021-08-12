@@ -69,9 +69,9 @@ const AlertWrap = styled.div`
  * @property {string} title
  * @property {boolean} form
  * @property {boolean} inverse
- * @property {[string, string | function]} [primary]
- *  @property {[string, string | function]} [secondary]
- *  @property {[string, string | function]} [extra]
+ * @property {[string, string | function,object]} [primary]
+ *  @property {[string, string | function,object]} [secondary]
+ *  @property {[string, string | function,object]} [extra]
  */
 
 /**
@@ -88,7 +88,7 @@ export const Layout = (props) => {
   const handleForm = (event) => {
     event.preventDefault();
     if (typeof primary[1] === "string") {
-      return history.to(primary[1]);
+      return history.push(primary[1],primary[2]|| {});
     }
     primary[1]();
   };
@@ -118,7 +118,7 @@ export const Layout = (props) => {
 
             {secondary && (
               <ButtonWrap>
-                <Button action={secondary[1]} inverse={inverse} full>
+                <Button action={(form && !primary) || secondary[1]} detail={secondary[1] || {}}inverse={inverse} full>
                   {secondary[0]}
                 </Button>
               </ButtonWrap>
@@ -130,6 +130,7 @@ export const Layout = (props) => {
                   inverse={inverse}
                   action={primary[1]}
                   full
+                  detail ={primary[2] || {}}
                   importance="primary"
                 >
                   {primary[0]}
@@ -139,7 +140,8 @@ export const Layout = (props) => {
 
             {extra && (
               <LinkWrap>
-                <Link action={extra[1]} inverse={inverse} full>
+                <Link action={extra[1]} detail ={extra[2] || {}}
+                inverse={inverse} full>
                   {extra[0]}
                 </Link>
               </LinkWrap>
