@@ -1,12 +1,13 @@
-import {Layout} from'../../../components/Layout'
-import { useUserSelect} from './UserSelect.useUserSelect'
+import {Layout} from'../../../components/Layout';
+import { useUserSelect} from './UserSelect.useUserSelect';
+import {ItemPreview} from "../../../components/ItemPreview"
 
 export const UserSelect =()=>{
 const {localUsers}= useUserSelect()
 
     return <Layout secondary={['Cancel','/']}primary={['user not listed','/auth/signin']} title={'Sign In'}>
-        {localUsers.map(({id,email, image, name, type })=>(
-            <div>{name}</div>
+        {localUsers.map(({id, image, name }, index)=>(
+           <ItemPreview  first={index<1} key={id} title={name} image={URL.createObjectURL(image)}/>
         ))}
     </Layout>
 

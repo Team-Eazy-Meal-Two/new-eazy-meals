@@ -96,6 +96,7 @@ const createUsersApi = () => {
       id,
       name,
       image,
+      activity: new Date(),
       type: "local",
     };
 
