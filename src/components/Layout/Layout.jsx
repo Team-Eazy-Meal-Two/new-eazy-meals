@@ -62,15 +62,29 @@ const AlertWrap = styled.div`
   padding-bottom: ${tokens.spacing.m};
 `;
 
+
 /**
+ * An action that can be passed to a button or a link. 
+ * The first item in the array should be the label to use for the button/link.
+ *  The second item is an action that should be performed when the link is clicked. If the second item is a string,
+ * then users will be navigated to that URL, alternatively,
+ *  if the second item is a function, then the function will be called as a callback when the button/link is pressed. 
+ * Lastly, an optional third item can also be passed. This is simply an object that will be passed as the 
+ * state to location object when navigating.
+ * 
+ * @typedef {[string, string | function, object]} action
+ * 
+ * 
  * @typedef {object} props
- * @property {JSX.Element} children
- * @property {string} title
+ * @property {JSX.Element} children - the main content on the page
+ * @property {string} title - a page title to be used as the <h1> at the top
+ *  @property {boolean} padded - adds padding  to the sides of the primary content (passed as children)
  * @property {boolean} form
- * @property {boolean} inverse
- * @property {[string, string | function,object]} [primary]
- *  @property {[string, string | function,object]} [secondary]
- *  @property {[string, string | function,object]} [extra]
+ * @property {boolean} inverse - gives the page a dark background and makes text white
+ * @property {action} [primary] - a primary action that is highlighted to a user
+ *  @property {action} [secondary] - a secondary supporting action that can be performed
+ *  @property {action} [extra] - an optional uncommon action that can be peformed
+ * @property {{title: string, description?: string, nature: 'error' | 'validation' | 'resolving' }}
  */
 
 /**
