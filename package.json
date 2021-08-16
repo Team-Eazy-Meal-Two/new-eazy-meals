@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "chokidar": "^3.5.2",
+    "dropzone": "^5.9.2",
     "gotrue-js": "^0.9.29",
     "idb": "^6.1.2",
     "react": "^17.0.2",

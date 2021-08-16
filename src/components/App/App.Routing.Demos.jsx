@@ -10,8 +10,8 @@ import { Demo as InputDemo } from "../Input/Input.Demo";
 
 import { Demo as LinkDemo } from "../Link/Link.Demo";
 import { Demo as TextDemo } from "../Text/Text.Demo";
-import {Demo as AlertDemo} from "../Alert/Alert.Demo"
-import {Demo as ItemPreview} from "../ItemPreview/ItemPreview.Demo"
+import { Demo as AlertDemo } from "../Alert/Alert.Demo"
+import { Demo as ItemPreview } from "../ItemPreview/ItemPreview.Demo";
 
 
 
@@ -49,6 +49,10 @@ import {Demo as ItemPreview} from "../ItemPreview/ItemPreview.Demo"
 
       <Route path="/demo/alert">
         <AlertDemo />
+      </Route>
+
+      <Route path="/demo/preview">
+        <ItemPreview />
       </Route>
     </Switch>
   );
