@@ -12,16 +12,20 @@ import { Demo as LinkDemo } from "../Link/Link.Demo";
 import { Demo as TextDemo } from "../Text/Text.Demo";
 import { Demo as AlertDemo } from "../Alert/Alert.Demo"
 import { Demo as ItemPreview } from "../ItemPreview/ItemPreview.Demo";
-
+import { Demo as CustomIcon } from "../CustomIcon/CustomIcon.Demo";
 
 
 
  export const Demos = ()=>{
   return (
     <Switch>
-        <Route path="/demo/item-preview">
+      <Route path="/demo/item-preview">
         <ItemPreview />
       </Route>
+      <Route path="/demo/icon">
+        <CustomIcon />
+      </Route>
+
       <Route path="/demo/button">
         <ButtonDemo />
       </Route>
@@ -37,7 +41,6 @@ import { Demo as ItemPreview } from "../ItemPreview/ItemPreview.Demo";
       <Route path="/demo/input">
         <InputDemo />
       </Route>
-
 
       <Route path="/demo/link">
         <LinkDemo />
