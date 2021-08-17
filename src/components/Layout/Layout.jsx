@@ -6,6 +6,7 @@ import { Button } from "../Button";
 import { Link } from "../Link";
 import { Alert } from "../Alert";
 import { useHistory } from "react-router-dom";
+import "../../types/action";
 
 const COLORS = {
   white: `rgb(${tokens.colors.white})`,
@@ -19,13 +20,13 @@ const Base = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  color: ${({ inverse }) => inverse ? COLORS.whiteStronger : COLORS.blackStrong};
-  width:100%;
-  max-width:25rem;
-  max-height:45rem;
-  padding-bottom:${tokens.spacing.xl};
-
-  `;
+  color: ${({ $inverse }) =>
+    $inverse ? COLORS.whiteStronger : COLORS.blackStrong};
+  width: 100%;
+  max-width: 25rem;
+  max-height: 45rem;
+  padding-bottom: ${tokens.spacing.xl};
+`;
 
 const Content = styled.div`
   flex-grow: 1;
@@ -33,6 +34,7 @@ const Content = styled.div`
   flex-direction: column;
 `;
 const Nested = styled.div`
+  padding: ${({ padded }) => (padded ? `0 ${tokens.spacing.m}` : 0)};
   flex-grow: 1;
   display: flex;
   justify-content: center;
@@ -51,30 +53,24 @@ const NestedChildren = styled.div`
   padding: ${tokens.spacing.m} 0;
 `;
 const BaseWrap = styled.div`
-background: ${({ inverse }) => (inverse ? COLORS.green : COLORS.white)};
-  min-height:100vh;
+  background: ${({ $inverse }) => ($inverse ? COLORS.green : COLORS.white)};
+  min-height: 100vh;
   display: flex;
-  align-items:center;
-  justify-content:center;
-
+  align-items: center;
+  justify-content: center;
 `;
 const AlertWrap = styled.div`
   padding-bottom: ${tokens.spacing.m};
 `;
-
+const Header = styled.header`
+  padding: ${tokens.spacing.xl} ${tokens.spacing.m} 0;
+`;
+const Actions = styled.aside`
+  padding: 0 ${tokens.spacing.m} ${tokens.spacing.l};
+`;
 
 /**
- * An action that can be passed to a button or a link. 
- * The first item in the array should be the label to use for the button/link.
- *  The second item is an action that should be performed when the link is clicked. If the second item is a string,
- * then users will be navigated to that URL, alternatively,
- *  if the second item is a function, then the function will be called as a callback when the button/link is pressed. 
- * Lastly, an optional third item can also be passed. This is simply an object that will be passed as the 
- * state to location object when navigating.
- * 
- * @typedef {[string, string | function, object]} action
- * 
- * 
+ *
  * @typedef {object} props
  * @property {JSX.Element} children - the main content on the page
  * @property {string} title - a page title to be used as the <h1> at the top
@@ -83,7 +79,7 @@ const AlertWrap = styled.div`
  * @property {boolean} inverse - gives the page a dark background and makes text white
  * @property {action} [primary] - a primary action that is highlighted to a user
  *  @property {action} [secondary] - a secondary supporting action that can be performed
- *  @property {action} [extra] - an optional uncommon action that can be peformed
+ *  @property {action} [extra] - an optional(visuall weaker) action that can be peformed
  * @property {{title: string, description?: string, nature: 'error' | 'validation' | 'resolving' }}
  */
 
@@ -93,91 +89,93 @@ const AlertWrap = styled.div`
  */
 
 export const Layout = (props) => {
-  const { children, title, inverse, extra, primary, secondary, alert, form } =
-    props;
+  const {
+    children,
+    title,
+    inverse,
+    extra,
+    primary,
+    secondary,
+    alert,
+    form,
+    padded = false,
+  } = props;
 
   const history = useHistory();
 
   const handleForm = (event) => {
     event.preventDefault();
     if (typeof primary[1] === "string") {
-      return history.push(primary[1],primary[2]|| {});
+      return history.push(primary[1], primary[2] || {});
     }
     primary[1]();
   };
 
-  const Header = styled.header`
-  padding: ${tokens.spacing.xl} ${tokens.spacing.m} 0;
-  `
-   const Actions = styled.aside`
-     padding: 0 ${tokens.spacing.m} ${tokens.spacing.l};
-   `;
-
   return (
-    <BaseWrap inverse={inverse}>
+    <BaseWrap $inverse={inverse}>
       <Base>
         <Header>
-          <Text inverse={inverse} size="xl" component="h1">
+          <Text $inverse={inverse} size="xl" component="h1">
             {title}
           </Text>
         </Header>
-        <main>
-          <Content
-            as={form ? "form" : "div"}
-            onSubmit={form ? handleForm : undefined}
-          >
-            <Nested>
+        <Content
+          as={form ? "form" : "div"}
+          onSubmit={form ? handleForm : undefined}
+        >
+          <main>
+            <Nested padded={padded}>
               <NestedChildren>{children} </NestedChildren>
             </Nested>
-          </Content>
-        </main>
-        <Actions aria-label="actions">
-          {alert && (
-            <AlertWrap>
-              <Alert {...alert} />
-            </AlertWrap>
-          )}
+          </main>
+          <Actions aria-label="actions">
+            {alert && (
+              <AlertWrap>
+                <Alert {...alert} />
+              </AlertWrap>
+            )}
 
-          {secondary && (
-            <ButtonWrap>
-              <Button
-                action={(form && !primary) || secondary[1]}
-                detail={secondary[1] || {}}
-                inverse={inverse}
-                full
-              >
-                {secondary[0]}
-              </Button>
-            </ButtonWrap>
-          )}
+            {secondary && (
+              <ButtonWrap>
+                <Button
+                  action={(form && !primary) || secondary[1]}
+                  detail={secondary[1] || {}}
+                  $inverse={inverse}
+                  full
+                >
+                  {secondary[0]}
+                </Button>
+              </ButtonWrap>
+            )}
 
-          {primary && (
-            <ButtonWrap>
-              <Button
-                inverse={inverse}
-                action={primary[1]}
-                full
-                detail={primary[2] || {}}
-                importance="primary"
-              >
-                {primary[0]}
-              </Button>
-            </ButtonWrap>
-          )}
+            {primary && (
+              <ButtonWrap>
+                <Button
+                  $inverse={inverse}
+                  action={primary[1]}
+                  full
+                  detail={primary[2] || {}}
+                  importance="primary"
+                >
+                  {primary[0]}
+                </Button>
+              </ButtonWrap>
+            )}
 
-          {extra && (
-            <LinkWrap>
-              <Link
-                action={extra[1]}
-                detail={extra[2] || {}}
-                inverse={inverse}
-                full
-              >
-                {extra[0]}
-              </Link>
-            </LinkWrap>
-          )}
-        </Actions>
+            {extra && (
+              <LinkWrap>
+                <Link
+                  action={extra[1]}
+                  detail={extra[2] || {}}
+                  $inverse={inverse}
+                  full
+                >
+                  {extra[0]}
+                </Link>
+              </LinkWrap>
+            )}
+          </Actions>
+        </Content>
       </Base>
     </BaseWrap>
   );

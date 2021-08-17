@@ -8,7 +8,7 @@ export const useItemsList = () => {
     const [current, setCurrent] = useState('')
 
     useMount(async() =>{
-        const { id } = await users.getCurrent();
+        // const { id } = await users.getCurrent();
     
 
         users.getCurrent().then((response) => {

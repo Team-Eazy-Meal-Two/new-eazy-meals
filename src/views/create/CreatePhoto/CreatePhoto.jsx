@@ -28,8 +28,8 @@ const Image = styled(ButtonBase)`
   );
 
   & :hover {
-    ${({ hasHover }) =>
-      !hasHover
+    ${({ $hasHover }) =>
+      !$hasHover
         ? ""
         : ` background-color: rgba(${tokens.colors.black}, ${tokens.opacity.subtle})`}
    
@@ -80,7 +80,7 @@ export const CreatePhoto = () => {
       </Text>
       <InputWrap>
         <Image
-          hasHover
+          $hasHover
           {...getRootProps()}
           isDragActive={isDragActive}
           image={image}

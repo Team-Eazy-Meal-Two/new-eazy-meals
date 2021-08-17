@@ -34,7 +34,7 @@ export const Link = (props) => {
 
   if (typeof action !== "string")
     return (
-      <Base inverse={inverse} as="button" onClick={action}>
+      <Base $inverse={inverse} as="button" onClick={action}>
         <Text size="s" inverse={inverse}>
           {children}
         </Text>
@@ -42,8 +42,8 @@ export const Link = (props) => {
     );
 
   return (
-    <Base inverse={inverse} as={RouterLink} component="a" to={action}>
-      <Text size="s" inverse={inverse}>
+    <Base $inverse={inverse} as={RouterLink} component="a" to={action}>
+      <Text size="s" $inverse={inverse}>
         {children}
       </Text>
     </Base>
