@@ -11,10 +11,13 @@ const DarkBg = styled.div`
 export const Demo = () => {
   return (
     <div>
-      <CustomIcon />
-
+      <CustomIcon image="activeCloud" />
+      <CustomIcon image="noCloud" />
+      <CustomIcon image="email" />
       <DarkBg>
-        <CustomIcon />
+        <CustomIcon image="activeCloud" />
+        <CustomIcon image="noCloud" />
+        <CustomIcon image="email" />
       </DarkBg>
     </div>
   );
