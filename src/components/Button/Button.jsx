@@ -71,7 +71,7 @@ const StyledButton = styled(MuiButton)`
  * @property {JSX.Elements} children
  * @property {'primary' | 'secondary'} importance
  * @property {boolean}  inverse
- * @property {action} action
+ * @property {} action
  */
 
 /**
@@ -93,10 +93,10 @@ export const Button = (props) => {
     <StyledButton
       importance={importance}
       children={children}
-      {...actionProps}
       fullWidth={full}
       $inverse={inverse}
       variant={variant}
+      {...actionProps}
     />
   );
 };

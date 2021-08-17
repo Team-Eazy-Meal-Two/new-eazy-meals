@@ -22,8 +22,8 @@ const Base = styled.button`
   background: none;
   text-decoration: underline;
   border-width: 0;
-  color: ${({ inverse }) =>
-    inverse
+  color: ${({ $inverse }) =>
+    $inverse
       ? `rgba(${tokens.colors.white},  ${tokens.opacity.stronger})`
       :
        `rgba(${tokens.colors.black},${tokens.opacity.strong})`};
@@ -35,7 +35,7 @@ export const Link = (props) => {
   if (typeof action !== "string")
     return (
       <Base $inverse={inverse} as="button" onClick={action}>
-        <Text size="s" inverse={inverse}>
+        <Text size="s" $inverse={inverse}>
           {children}
         </Text>
       </Base>

@@ -25,7 +25,6 @@ const Base = styled.div`
   width: 100%;
   max-width: 25rem;
   max-height: 45rem;
-  padding-bottom: ${tokens.spacing.xl};
 `;
 
 const Content = styled.div`
@@ -115,7 +114,7 @@ export const Layout = (props) => {
     <BaseWrap $inverse={inverse}>
       <Base>
         <Header>
-          <Text $inverse={inverse} size="xl" component="h1">
+          <Text inverse={inverse} size="xl" component="h1">
             {title}
           </Text>
         </Header>
@@ -140,7 +139,7 @@ export const Layout = (props) => {
                 <Button
                   action={(form && !primary) || secondary[1]}
                   detail={secondary[1] || {}}
-                  $inverse={inverse}
+                  inverse={inverse}
                   full
                 >
                   {secondary[0]}
@@ -151,7 +150,7 @@ export const Layout = (props) => {
             {primary && (
               <ButtonWrap>
                 <Button
-                  $inverse={inverse}
+                  inverse={inverse}
                   action={primary[1]}
                   full
                   detail={primary[2] || {}}
@@ -167,7 +166,7 @@ export const Layout = (props) => {
                 <Link
                   action={extra[1]}
                   detail={extra[2] || {}}
-                  $inverse={inverse}
+                  inverse={inverse}
                   full
                 >
                   {extra[0]}

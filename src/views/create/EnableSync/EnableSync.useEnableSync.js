@@ -1,22 +1,10 @@
-import { useState } from "react";
-import { useHistory } from "react-router";
-
+import { useNetworkState} from "react-use"
+ 
 export const useEnableSync = () => {
-  const history = useHistory();
-  const [name, setName] = useState("");
-  const [alert, setAlert] = useState(null);
-
-  const save = () => {
-    if (!name || name.trim() === "") return setAlert("noName");
-   history.push('/auth/photo')
-  }
+ const {online } = useNetworkState();
 
   return {
-    name,
-    setName,
-    alert,
-    setAlert,
-    save,
-  };
+  online
+  }
 };
-export default useEnableSync  ;
+export default useEnableSync;
