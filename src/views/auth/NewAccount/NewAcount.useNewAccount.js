@@ -34,8 +34,7 @@ export const useNewAccount = () => {
       return setAlert("misMatchConfirmPassword");
       setAlert('creating')
       const response = await auth.signup(email,password);
-      console.log(response)
-
+     
       const [success, code] = await authCreatAccount(email, password).catch(error=> console.log(error))
 
       if (!success){

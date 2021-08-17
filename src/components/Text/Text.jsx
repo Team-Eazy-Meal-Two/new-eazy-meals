@@ -13,12 +13,12 @@ const COLORS = {
   whiteStronger: `rgba(${tokens.colors.white}, ${tokens.opacity.stronger})`,
 };
 
-const calcColor = ({ size, inverse }) => {
-  if ((size === "xl" || size === "l ") && inverse) return COLORS.white;
+const calcColor = ({ size, $inverse }) => {
+  if ((size === "xl" || size === "l ") && $inverse) return COLORS.white;
   if (size === "xl" || size === "l") return COLORS.blackStronger;
-  if (size === "m" && inverse) return COLORS.whiteStronger;
+  if (size === "m" && $inverse) return COLORS.whiteStronger;
   if (size === "m") return COLORS.blackStrong
-  if (inverse) return COLORS.whiteStrong
+  if ($inverse) return COLORS.whiteStrong
   return COLORS.blackMedium;
 };
 
@@ -51,6 +51,7 @@ const StyledTypography = styled(Typography)`
  * @returns {JSX.Element}
  */
 export const Text = (props) => {
-  return <StyledTypography {...props} />;
+  const {inverse, ...remainingProps} = props;
+  return <StyledTypography {...remainingProps} $inverse={inverse}/>;
 };
 export default Text;
