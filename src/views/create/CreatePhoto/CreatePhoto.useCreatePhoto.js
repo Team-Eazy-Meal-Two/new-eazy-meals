@@ -22,7 +22,7 @@ export const useCreatePhoto = () => {
     if (!image) return setAlert("noImage");
     setAlert('saving')
     await users.createLocalAccount(state.name,image)
-   history.push('/create/sync')
+  //  history.push('/create/sync')
   }
 
   const upLoadImage=([file])=>{
