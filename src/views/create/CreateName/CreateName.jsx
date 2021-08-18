@@ -19,6 +19,7 @@ export const CreateName = () => {
   return (
     <Layout
       title="New Account"
+      padded
       form
       primary={["Continue",save,{ name }]}
       secondary={["Back", "/"]}

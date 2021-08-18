@@ -1,6 +1,7 @@
 import GoTrue from "gotrue-js";
 import { openDB } from "idb";
 import { v4 as createId } from "uuid";
+import '../../types/User'
 
 const auth = new GoTrue({
   APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
@@ -89,13 +90,18 @@ const createUsersApi = () => {
    */
   const createLocalAccount = async (name, image) => {
     const db = await dbRequest;
+    const id = createId()
+
     const newAccount = {
-      id: createId(),
+      id,
       name,
       image,
+      activity: new Date(),
       type: "local",
     };
-    db.put("data", newAccount);
+
+    await db.put("data", newAccount);
+    await db.put("meta", { id: "current", value: id });
   };
 
   /**
@@ -127,7 +133,7 @@ const createUsersApi = () => {
   };
 
   /**
-   * @returns {Promise<null | { id: string}>}
+   * @returns {Promise<null | User>}
    */
 
   const getCurrent = async () => {
@@ -140,8 +146,10 @@ const createUsersApi = () => {
     const response = await db.get("data", current.value);
     return response;
   };
+
+
   /**
-   * @returns {Promise<{ id: string}[]>}
+   * @returns {Promise<User[]>}
    */
   const getUsers = async () => {
     const db = await dbRequest;
