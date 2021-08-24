@@ -1,1 +1,0 @@
-export { default,CreateEmail} from './CreateEmail'

@@ -16,7 +16,7 @@ const checkIfRecover = async () => {
   const tokenValue = hash.replace(`/#/recovery_token=/`, "");
   const response = await users.signInWithRecovery(tokenValue);
   return response;
-}
+};
 
 const useAuthInsideProvider = () => {
   const [user, setUser] = useState(null);
@@ -27,7 +27,6 @@ const useAuthInsideProvider = () => {
 
     const recovery = await checkIfRecover();
     if (recovery) return setUser(recovery);
-
 
     const currentResponce = await users.getCurrent();
     if (currentResponce) return setUser(currentResponce);
@@ -43,8 +42,11 @@ const useAuthInsideProvider = () => {
     return [success, payload];
   };
 
-  const createAccount = async (email, password) => {
-    const [success, payload] = await users.createAccount(email, password);
+  const changeToOnlineAccount = async (email, password) => {
+    const [success, payload] = await users.changeToOnlineAccount(
+      email,
+      password
+    );
     return [success, payload];
   };
 
@@ -61,7 +63,7 @@ const useAuthInsideProvider = () => {
     loading: users === null,
     user,
     signIn,
-    createAccount,
+    changeToOnlineAccount,
     signOut,
     reset: users.resetPassword,
   };
