@@ -1,7 +1,7 @@
 import GoTrue from "gotrue-js";
 import { openDB } from "idb";
 import { v4 as createId } from "uuid";
-import '../../types/User'
+import "../../types/User";
 
 const auth = new GoTrue({
   APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
@@ -90,7 +90,7 @@ const createUsersApi = () => {
    */
   const createLocalAccount = async (name, image) => {
     const db = await dbRequest;
-    const id = createId()
+    const id = createId();
 
     const newAccount = {
       id,
@@ -112,15 +112,16 @@ const createUsersApi = () => {
   const changeToOnlineAccount = async (id, email, password) => {
     try {
       const db = await dbRequest;
-      const {id} = await getCurrent();
+      const currentUser = await getCurrent();
       const { id: netlifyId, token } = await auth.signup(email, password);
+      const newUserData = { ...currentUser, netlifyId, email, type: "online" };
 
       await db.put("meta", { id: "current", value: id });
       await db.put("meta", { id: "accessToken", value: token.access_token });
-     
 
+      await db.put("data", newUserData);
       await signIn(email, password);
-      return [true, null];
+      return [true, newUserData];
     } catch (error) {
       const errorAsString = error.toString();
 
@@ -148,7 +149,6 @@ const createUsersApi = () => {
     const response = await db.get("data", current.value);
     return response;
   };
-
 
   /**
    * @returns {Promise<User[]>}

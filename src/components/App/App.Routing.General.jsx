@@ -21,10 +21,10 @@ export const General = (props) => {
       <Route path="/sync/email">
         <SyncEmail />
       </Route>
-      <Route path="/">
+      
         <Route path="/">
           {user ? <Redirect to="/sync/check" /> : <LandingPage />}
-        </Route>
+        
       </Route>
     </Switch>
   );
