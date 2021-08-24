@@ -53,10 +53,20 @@ const createUsersApi = () => {
    * @param {string} token
    * @returns {Promise<[boolean, null | 'technical']>}
    */
-  const signInWithToken = async (token) => {
+  const signInWithOnlineToken = async (token) => {
     try {
       const db = await dbRequest;
       const { id } = await auth.confirm(token);
+
+      let cursor = await db.transaction("data").store.openCursor();
+      let result = null;
+
+      while (cursor && result === null) {
+        if (cursor.value.netlifyId === id) {
+          result = cursor.value;
+        }
+        cursor = await cursor.continue();
+      }
 
       await db.put("meta", { id: "current", value: id });
       await db.put("data", { id: id });
@@ -114,7 +124,12 @@ const createUsersApi = () => {
       const db = await dbRequest;
       const currentUser = await getCurrent();
       const { id: netlifyId, token } = await auth.signup(email, password);
-      const newUserData = { ...currentUser, netlifyId, email, type: "online" };
+      const newUserData = {
+        ...currentUser,
+        netlifyId,
+        email,
+        type: "verifying",
+      };
 
       await db.put("meta", { id: "current", value: id });
       await db.put("meta", { id: "accessToken", value: token.access_token });
@@ -180,16 +195,28 @@ const createUsersApi = () => {
     }
   };
 
+  const cancelVerification = async () => {
+    const db = await dbRequest;
+    const user = await getCurrent();
+
+    const response = await db.put("data", {
+      ...user,
+      type: "local",
+    });
+    return response;
+  };
+
   return {
     getCurrent,
     getUsers,
     changeToOnlineAccount,
     createLocalAccount,
     signIn,
-    signInWithToken,
+    signInWithOnlineToken,
     signOut,
     resetPassword,
     signInWithRecovery,
+    cancelVerification,
   };
 };
 
