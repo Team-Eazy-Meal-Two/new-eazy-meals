@@ -47,20 +47,26 @@ const useAuthInsideProvider = () => {
       email,
       password
     );
+    if (success) {
+      setUser({
+        ...user,
+        type: "verifying",
+      });
+    }
+
     return [success, payload];
   };
 
+  const cancelVerification = async () => {
+    const [success, payload] = await users.cancelVerification();
 
-const cancelVerification  = async ()=>{
-const [success, payload] = await users.cancelVerification()
-
-if (success){
-  setUser({
-    ...user,
-    type:"local"
-  })
-}
-}
+    if (success) {
+      setUser({
+        ...user,
+        type: "local",
+      });
+    }
+  };
 
   const signOut = async () => {
     const [success] = await users.signOut();

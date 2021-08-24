@@ -135,7 +135,7 @@ const createUsersApi = () => {
       await db.put("meta", { id: "accessToken", value: token.access_token });
 
       await db.put("data", newUserData);
-      await signIn(email, password);
+
       return [true, newUserData];
     } catch (error) {
       const errorAsString = error.toString();
