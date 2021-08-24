@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import validator from "validator";
 import { useHistory } from "react-router-dom";
 import GoTrue from "gotrue-js";
-import { context as authContext } from "../../hooks/useAuth";
+import { context as authContext } from "../../../hooks/useAuth";
 
 const auth = new GoTrue({
   APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",

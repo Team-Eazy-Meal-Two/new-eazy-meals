@@ -1,8 +1,8 @@
 import React from "react";
-import { Layout } from "../../components/Layout";
-import { Input } from "../../components/Input";
+import { Layout } from "../../../components/Layout/Layout";
+import { Input } from "../../../components/Input/Input";
 import styled from "styled-components";
-import { tokens } from "../../data/tokens";
+import { tokens } from "../../../data/tokens/tokens";
 import { useSyncEmail } from "./SyncEmail.useSyncEmail";
 import { ALERTS } from "./SyncEmail.constants";
 

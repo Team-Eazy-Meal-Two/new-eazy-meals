@@ -112,6 +112,7 @@ const createUsersApi = () => {
   const changeToOnlineAccount = async (id, email, password) => {
     try {
       const db = await dbRequest;
+      const {id} = await getCurrent();
       const { id: netlifyId, token } = await auth.signup(email, password);
 
       await db.put("meta", { id: "current", value: id });
