@@ -6,10 +6,9 @@ import { Demos } from "./App.Routing.Demos";
 import { Auth } from "./App.Routing.Auth";
 import { Create } from "./App.Routing.Create";
 import { EmailSent } from "../../views/general/EmailSent";
-import {General} from "./App.Routing.General";
-//  import {General} from "./App.Routing.General";
+import { General } from "./App.Routing.General";
 import { ItemsList } from "../../views/ItemsList";
-
+import { SyncEmail } from "../../views/sync/SyncEmail/SyncEmail";
 const Items = () => {
   return (
     <Switch>
@@ -33,22 +32,21 @@ export const Routing = () => {
       </Route>
 
       <Route path="/items">{user ? <Items /> : <Redirect to="/" />}</Route>
-      <Route path="/sync">{user? <General/>: <Redirect to="/"/>}</Route>
+      <Route path="/sync">{user ? <SyncEmail /> : <Redirect to="/" />}</Route>
 
       <Route path="/auth">
         {user ? <Redirect to="/sync/check " /> : <Auth />}
       </Route>
-      
+
       <Route path="/create">
         {user ? <Redirect to="/sync/check" /> : <Create />}
       </Route>
 
-      <Route path="sent">
+      <Route path="/sent">
         <EmailSent />
       </Route>
 
-     
-      <General user={user}/>
+      <General user={user} />
     </Switch>
   );
 };

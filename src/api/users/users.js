@@ -1,3 +1,4 @@
+import { NewReleases } from "@material-ui/icons";
 import GoTrue from "gotrue-js";
 import { openDB } from "idb";
 import { v4 as createId } from "uuid";
@@ -56,22 +57,33 @@ const createUsersApi = () => {
   const signInWithOnlineToken = async (token) => {
     try {
       const db = await dbRequest;
-      const { id } = await auth.confirm(token);
+      const { id: netlifyId } = await auth.confirm(token);
 
       let cursor = await db.transaction("data").store.openCursor();
       let result = null;
 
       while (cursor && result === null) {
-        if (cursor.value.netlifyId === id) {
+        if (cursor.value.netlifyId === netlifyId) {
           result = cursor.value;
         }
         cursor = await cursor.continue();
       }
 
-      await db.put("meta", { id: "current", value: id });
-      await db.put("data", { id: id });
+      const newUserData={
+        ...result,
+        type: "online",
+        netlifyId,
+      }
 
-      return [true, null];
+      await db.put("data", newUserData)
+
+      await db.put("meta", {
+        id: "accessToken",
+        value: token.access_token,
+      });
+
+
+      return [true, newUserData];
     } catch (error) {
       return [false, "techinal"];
     }

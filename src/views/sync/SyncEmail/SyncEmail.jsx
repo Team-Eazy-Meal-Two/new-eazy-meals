@@ -33,6 +33,7 @@ export const SyncEmail = () => {
       <Layout
         form
         title="Online Details"
+        padded
         alert={alert ? ALERTS[alert] : undefined}
         secondary={["Cancel", isResting && "/"]}
         primary={["Sync Account", isResting && createAccount]}
