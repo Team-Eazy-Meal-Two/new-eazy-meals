@@ -39,6 +39,7 @@ export const Input = (props) => {
       fullWidth
     InputProps={{type:accepts}}
       variant="filled"
+      autoComplete="off"
     />
   );
 };
