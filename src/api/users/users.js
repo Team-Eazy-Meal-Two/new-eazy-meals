@@ -1,8 +1,8 @@
+import { NewReleases } from "@material-ui/icons";
 import GoTrue from "gotrue-js";
-// import { openDB } from "idb";
-// import { v4 as createId } from "uuid";
-import createDbStore, {} from '../../utils/createDbStore'
-import '../../types/User'
+import { openDB } from "idb";
+import { v4 as createId } from "uuid";
+import "../../types/User";
 
 const auth = new GoTrue({
   APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
@@ -50,17 +50,36 @@ const createUsers = () => {
    * @param {string} token
    * @returns {Promise<[boolean, null | 'technical']>}
    */
-  const signInWithToken = async (token) => {
+  const signInWithOnlineToken = async (token) => {
     try {
+      const db = await dbRequest;
       const { id: netlifyId } = await auth.confirm(token);
-      const { id } = dbStore(
-        (singleUser) => singleUser.netlifyId === netlifyId
-      )
 
-      await db.put("meta", { id: "current", value: id });
-      await db.put("data", { id: id });
+      let cursor = await db.transaction("data").store.openCursor();
+      let result = null;
 
-      return [true, null];
+      while (cursor && result === null) {
+        if (cursor.value.netlifyId === netlifyId) {
+          result = cursor.value;
+        }
+        cursor = await cursor.continue();
+      }
+
+      const newUserData={
+        ...result,
+        type: "online",
+        netlifyId,
+      }
+
+      await db.put("data", newUserData)
+
+      await db.put("meta", {
+        id: "accessToken",
+        value: token.access_token,
+      });
+
+
+      return [true, newUserData];
     } catch (error) {
       return [false, "techinal"];
     }
@@ -88,7 +107,8 @@ const createUsers = () => {
    * @param {Blob} image
    */
   const createLocalAccount = async (name, image) => {
-    const id = db.generateId()
+    const db = await dbRequest;
+    const id = createId();
 
     const newAccount = {
       id,
@@ -109,21 +129,21 @@ const createUsers = () => {
    */
   const changeToOnlineAccount = async (id, email, password) => {
     try {
+      const db = await dbRequest;
       const currentUser = await getCurrent();
-      const { id: netlifyId } = await auth.signup(email, password);
-
-      await db.put("meta", { id: "current", value: id });
-      await db.put("data", { id, netlifyId, email, type: "online" });
-      
+      const { id: netlifyId, token } = await auth.signup(email, password);
       const newUserData = {
         ...currentUser,
         netlifyId,
         email,
-        type: 'verifying'
+        type: "verifying",
+      };
 
-      }
+      await db.put("meta", { id: "current", value: id });
+      await db.put("meta", { id: "accessToken", value: token.access_token });
 
-      await db.update(email, newUserData);
+      await db.put("data", newUserData);
+
       return [true, newUserData];
     } catch (error) {
       const errorAsString = error.toString();
@@ -149,7 +169,6 @@ const createUsers = () => {
     const response = await db.read(current);
     return response;
   };
-
 
   /**
    * @returns {Promise<User[]>}
@@ -179,16 +198,28 @@ const createUsers = () => {
     }
   };
 
+  const cancelVerification = async () => {
+    const db = await dbRequest;
+    const user = await getCurrent();
+
+    const response = await db.put("data", {
+      ...user,
+      type: "local",
+    });
+    return response;
+  };
+
   return {
     getCurrent,
     getUsers,
     changeToOnlineAccount,
     createLocalAccount,
     signIn,
-    signInWithToken,
+    signInWithOnlineToken,
     signOut,
     resetPassword,
     signInWithRecovery,
+    cancelVerification,
   };
 };
 

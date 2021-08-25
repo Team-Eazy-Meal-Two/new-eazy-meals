@@ -19,7 +19,7 @@ const StyledIcon = styled(Icon)`
 
 export const EmailSent = () => {
   return (
-    <Layout title="Email Sent" inverse secondary={["Cancel", "/"]}>
+    <Layout title="Email Sent" inverse secondary={["Continue", "/"]}>
       <Content>
         <StyledIcon />
         <Text size="l" inverse>
