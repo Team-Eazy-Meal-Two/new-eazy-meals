@@ -6,31 +6,25 @@ import { HashRouter } from "react-router-dom";
 import { Routing } from "./App.Routing";
 import { Provider as AuthProvider } from "../../hooks/useAuth";
 
-// const fireTest = () => {
-//   new Notification("Hi there!", {
-//     body: "This is a discription with more details",
-//     //badge: "use the icon link.. 56:50 from the video"
-//     //icon: same as badge
-//     //image:same 1:01:48
-//   });
-// };
 
 const fireAlert = (registration) => {
   registration.showNotification("Hi there!", {
     body: "This is a discription with more details",
-    //badge: "use the icon link.. 56:50 from the video"
-    //icon: same as badge
-    //image:same 1:01:48
+    badge: "https://team-eazy-meals-two.netlify.app/meta/favicon-32x32.png",
+    icon: "https://team-eazy-meals-two.netlify.app/meta/android-chrome-512x512.png",
+    image: "https://team-eazy-meals-two.netlify.app/meta/coverImage.jpg",
+    
     actions:[
     {
       action: "add",
       title: "Add",
-      //icon: icon link 1:08:12
+      icon: "https://team-eazy-meals-two.netlify.app/meta/add.png"
     },
     {
       action: "view",
       title: "View",
-      //icon: icon link 1:08:12
+      icon: "https://team-eazy-meals-two.netlify.app/meta/view.png"
+
     }
     ]
   });

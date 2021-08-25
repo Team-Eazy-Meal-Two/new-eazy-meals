@@ -26,7 +26,7 @@ export const useCreatePhoto = () => {
 
     await users.createLocalAccount(state.name,image)
 
-   history.push('/create/sync')
+   history.push("/sync/check");
   }
 
   const upLoadImage=([file])=>{

@@ -16,7 +16,7 @@ const checkIfRecover = async () => {
   const tokenValue = hash.replace(`/#/recovery_token=/`, "");
   const response = await users.signInWithRecovery(tokenValue);
   return response;
-}
+};
 
 const useAuthInsideProvider = () => {
   const [user, setUser] = useState(null);
@@ -27,7 +27,6 @@ const useAuthInsideProvider = () => {
 
     const recovery = await checkIfRecover();
     if (recovery) return setUser(recovery);
-
 
     const currentResponce = await users.getCurrent();
     if (currentResponce) return setUser(currentResponce);
@@ -43,9 +42,30 @@ const useAuthInsideProvider = () => {
     return [success, payload];
   };
 
-  const createAccount = async (email, password) => {
-    const [success, payload] = await users.createAccount(email, password);
+  const changeToOnlineAccount = async (email, password) => {
+    const [success, payload] = await users.changeToOnlineAccount(
+      email,
+      password
+    );
+    if (success) {
+      setUser({
+        ...user,
+        type: "verifying",
+      });
+    }
+
     return [success, payload];
+  };
+
+  const cancelVerification = async () => {
+    const [success, payload] = await users.cancelVerification();
+
+    if (success) {
+      setUser({
+        ...user,
+        type: "local",
+      });
+    }
   };
 
   const signOut = async () => {
@@ -61,8 +81,9 @@ const useAuthInsideProvider = () => {
     loading: users === null,
     user,
     signIn,
-    createAccount,
+    changeToOnlineAccount,
     signOut,
+    cancelVerification,
     reset: users.resetPassword,
   };
 };
@@ -72,9 +93,10 @@ const useAuthInsideProvider = () => {
  * @property {boolean} loading
  * @property {null | false | { id: string}} user
  * @property {(email: string, password: string) => Promise<boolean, any>} signIn
- * @property {(email: string, password: string) => Promise<boolean, any>} createAccount
+ * @property {(email: string, password: string) => Promise<boolean, any>} changeToOnlineAccount
  * @property {() => Promise<boolean, any>} signOut
  * @property {() => Promise<boolean>} reset
+ *  @property {() => Promise<boolean>, any} cancelVerification
  */
 
 /**

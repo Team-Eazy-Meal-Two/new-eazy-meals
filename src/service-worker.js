@@ -1,18 +1,30 @@
 /* eslint-disable no-restricted-globals */
 import md5 from "md5";
-//Add meta file..15:50 on the video
 const STATIC_FILES = [
-  //add metas... 15:50
-  //add cover image on meta...59:20 on the video
   //add badge image as well 1:15:12 - 1:18:15
+  '/meta/coverImage.jpg',
+  '/meta/add.png',
+  '/meta/view.png',
+  '/meta/other.png',
+  '/meta/android-chrome-192x192.png',
+  '/meta/android-chrome-512x512.png',
+  '/meta/apple-touch-icon.png',
+  '/meta/browserconfig.xml',
+  '/meta/coverImage.jpeg',
+  '/meta/favicon-16x16.png',
+  '/meta/favicon-32x32.png',
+  '/meta/maskable_icon_x512.png',
+  '/meta/maskable_icon_x128.png',
+  '/meta/favicon.ico',
+  '/meta/mstile-150x150.png',
+  '/meta/safari-pinned-tap.svg.png',
+  '/meta/site.webmanifest', 
   "/font/400.ttf",
   "/font/500.ttf",
   "/font/700.ttf",
   "/font/900.ttf",
   "/"
 ];
-//check mobile app access 30:00 on the video
-//add icon 40:00 - 50:00
 
 const REACT_FILES = self._WB_MANIFEST;
 const reactFilesUrls = REACT_FILES.map((file) => file.url);
