@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import {useContext} from 'react';
 import {useNetworkState} from "react-use";
 import {context as authContext} from "../../../hooks/useAuth";
 

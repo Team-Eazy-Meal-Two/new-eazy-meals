@@ -1,14 +1,14 @@
 import { useState, useContext } from "react";
 import validator from "validator";
 import { useHistory } from "react-router-dom";
-import GoTrue from "gotrue-js";
+//import GoTrue from "gotrue-js";
 import { context as authContext } from "../../../hooks/useAuth";
 
-const auth = new GoTrue({
-  APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
-  audience: "",
-  setCookie: false,
-});
+// const auth = new GoTrue({
+//   APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
+//   audience: "",
+//   setCookie: false,
+// });
 
 export const useSyncEmail = () => {
   const { changeToOnlineAccount } = useContext(authContext);
@@ -31,7 +31,7 @@ export const useSyncEmail = () => {
     if (password !== confirmPassword)
       return setAlert("misMatchConfirmPassword");
     setAlert("creating");
-    const response = await auth.signup(email, password);
+    // const response = await auth.signup(email, password);
 
     const [success, code] = await changeToOnlineAccount(email, password).catch(
       (error) => console.log(error)

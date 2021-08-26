@@ -1,7 +1,8 @@
-import { NewReleases } from "@material-ui/icons";
+//import { NewReleases } from "@material-ui/icons";
 import GoTrue from "gotrue-js";
-import { openDB } from "idb";
-import { v4 as createId } from "uuid";
+//import { openDB } from "idb";
+//import { v4 as createId } from "uuid";
+import { createDbStore } from '../../../src/utils/createDbStore'
 import "../../types/User";
 
 const auth = new GoTrue({
@@ -10,20 +11,20 @@ const auth = new GoTrue({
   setCookie: false,
 });
 
-const dbStore = createDbStore('users', ['activity'])
+const db = createDbStore('users', ['activity'])
 
 const createUsers = () => {
   /**
    * @param {string} email
    * @param {string} password
+   * @returns {Promice<[boolean, { id: string } | 'notAccount' | 'techinal']>}
    * @returns {Promise<[boolean, null |'notAccount' | 'technical']>}
    */
   const signIn = async (email, password) => {
     try {
-      const db = await dbRequest;
-      const { id } = await auth.login(email, password);
-      await dbStore.setMeta('current', id)
-      await dbStore.setMeta('accessToken', token.access_token)
+      const { id, token } = await auth.login(email, password);
+      await db.setMeta('current', id)
+      await db.setMeta('accessToken', token.access_token)
       // await db.put("meta", { id: "current", value: id });
       // await db.put("data", { id: id });
       return [true, null];
@@ -52,18 +53,13 @@ const createUsers = () => {
    */
   const signInWithOnlineToken = async (token) => {
     try {
-      const db = await dbRequest;
+      // const db = await dbRequest;
       const { id: netlifyId } = await auth.confirm(token);
+      const result = db((singleUser) => singleUser.netlifyId === 'netlifyId')
 
-      let cursor = await db.transaction("data").store.openCursor();
-      let result = null;
+     
 
-      while (cursor && result === null) {
-        if (cursor.value.netlifyId === netlifyId) {
-          result = cursor.value;
-        }
-        cursor = await cursor.continue();
-      }
+      
 
       const newUserData={
         ...result,
@@ -71,14 +67,9 @@ const createUsers = () => {
         netlifyId,
       }
 
-      await db.put("data", newUserData)
-
-      await db.put("meta", {
-        id: "accessToken",
-        value: token.access_token,
-      });
-
-
+      await db.update(newUserData)
+      await db.setMeta('accessToken', token.access_token)
+    
       return [true, newUserData];
     } catch (error) {
       return [false, "techinal"];
@@ -90,7 +81,6 @@ const createUsers = () => {
    */
   const signInWithRecovery = async (token) => {
     try {
-      const db = await dbRequest;
       const { id } = await auth.recoveryToken(token);
 
       await db.setMeta( "current", id );
@@ -107,8 +97,7 @@ const createUsers = () => {
    * @param {Blob} image
    */
   const createLocalAccount = async (name, image) => {
-    const db = await dbRequest;
-    const id = createId();
+    const id = db.generateId();
 
     const newAccount = {
       id,
@@ -118,7 +107,7 @@ const createUsers = () => {
       type: "local",
     };
 
-    await db.add("data", newAccount);
+    await db.add(newAccount);
     await db.setMeta("current", id );
   };
 
@@ -129,9 +118,8 @@ const createUsers = () => {
    */
   const changeToOnlineAccount = async (id, email, password) => {
     try {
-      const db = await dbRequest;
       const currentUser = await getCurrent();
-      const { id: netlifyId, token } = await auth.signup(email, password);
+      const { id: netlifyId } = await auth.signup(email, password);
       const newUserData = {
         ...currentUser,
         netlifyId,
@@ -139,10 +127,10 @@ const createUsers = () => {
         type: "verifying",
       };
 
-      await db.put("meta", { id: "current", value: id });
-      await db.put("meta", { id: "accessToken", value: token.access_token });
+      // await db.put("meta", { id: "current", value: id });
+      // await db.put("meta", { id: "accessToken", value: token.access_token });
 
-      await db.put("data", newUserData);
+      await db.update(newUserData);
 
       return [true, newUserData];
     } catch (error) {
@@ -186,7 +174,19 @@ const createUsers = () => {
     return [true];
   };
 
-  /**
+  /*@param {string} id
+   * @returns {Promise<[boolean, null | 'technical']>}
+   */
+  const singInLocal = async (id) => {
+  try{
+    await db.setMeta("current", id );
+    const currentUser = await users.getCurrent();
+    return [true, currentUser];
+  } catch (error) {
+    return [false, "technical"];
+  }
+  };
+  /*
    * @returns {Promise<[boolean, null | 'technical']>}
    */
   const signOut = async () => {
@@ -199,10 +199,9 @@ const createUsers = () => {
   };
 
   const cancelVerification = async () => {
-    const db = await dbRequest;
     const user = await getCurrent();
 
-    const response = await db.put("data", {
+    const response = await db.update({
       ...user,
       type: "local",
     });
@@ -216,6 +215,7 @@ const createUsers = () => {
     createLocalAccount,
     signIn,
     signInWithOnlineToken,
+    singInLocal,
     signOut,
     resetPassword,
     signInWithRecovery,
@@ -223,5 +223,5 @@ const createUsers = () => {
   };
 };
 
-export const users = createUsersApi();
+export const users = createUsers();
 export default users;
