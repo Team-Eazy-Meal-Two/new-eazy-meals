@@ -5,7 +5,7 @@ export const createDbStore = (name, keys = []) => {
   const dbRequest = openDB(name, 1, {
     upgrade: (innerDb) => {
       innerDb.createObjectStore("data", { keyPath: "id" });
-     const data = innerDb.createObjectStore("meta", { keyPath: "id" });
+    const data = innerDb.createObjectStore("meta", { keyPath: "id" });
 
      keys.forEach(singleKey => 
       data.createIndex(`${singleKey}-index`, singleKey)
@@ -40,7 +40,7 @@ export const createDbStore = (name, keys = []) => {
 
   const getMeta = async (key) => {
     const db = await dbRequest;
-    const { value } = await db.get('meta,', key)
+    const { value } = await db.get('meta', key)
     return value
 
   }
@@ -89,7 +89,7 @@ export const createDbStore = (name, keys = []) => {
     const promiseArray = valuesAsArray.map(
       (singleValues) =>
         new Promise((resolve) => {
-          read(singleValue.id).then(existingValue => {
+          read(singleValues.id).then(existingValue => {
             db.put("data", {
               ...existingValue,
               ...singleValues,
@@ -155,23 +155,22 @@ export const createDbStore = (name, keys = []) => {
     const db = await dbRequest;
     const index = db.transaction('data')
     .store
-    .index(`${sorting}-index`)
-
-    let cursor = await index.openCursor(null, reverse ? 'prev' : 'next');
+    .index(`${sorting}-index`, reverse ? 'prev' : 'next');
+    let cursor = await index.openCursor();
 
     let countTrack = 0;
     let result = [];
 
     while (cursor && (!count === 0 || countTrack < count)) {
       if (query === true || query(cursor.value)) {
-        results.push(cursor.value);
+        result.push(cursor.value);
         countTrack += 1;
       }
 
       cursor = await cursor.continue();
     }
 
-    return results;
+    return result;
   };
 
   /**

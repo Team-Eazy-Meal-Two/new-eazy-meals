@@ -1,7 +1,8 @@
-import { NewReleases } from "@material-ui/icons";
+//import { NewReleases } from "@material-ui/icons";
 import GoTrue from "gotrue-js";
-import { openDB } from "idb";
-import { v4 as createId } from "uuid";
+//import { openDB } from "idb";
+//import { v4 as createId } from "uuid";
+import { createDbStore } from '../../../src/utils/createDbStore'
 import "../../types/User";
 
 
@@ -11,19 +12,20 @@ const auth = new GoTrue({
   setCookie: false,
 });
 
-const db = createDbStore("users", ["activity"]);
+const db = createDbStore('users', ['activity'])
 
 const createUsers = () => {
   /**
    * @param {string} email
    * @param {string} password
+   * @returns {Promice<[boolean, { id: string } | 'notAccount' | 'techinal']>}
    * @returns {Promise<[boolean, null |'notAccount' | 'technical']>}
    */
   const signIn = async (email, password) => {
     try {
-     const { id } = await auth.login(email, password);
-      await db.setMeta("current", id);
-      await db.setMeta("accessToken", token.access_token);
+      const { id, token } = await auth.login(email, password);
+      await db.setMeta('current', id)
+      await db.setMeta('accessToken', token.access_token)
       // await db.put("meta", { id: "current", value: id });
       // await db.put("data", { id: id });
       return [true, null];
@@ -52,21 +54,23 @@ const createUsers = () => {
    */
   const signInWithOnlineToken = async (token) => {
     try {
+      // const db = await dbRequest;
       const { id: netlifyId } = await auth.confirm(token);
-      const result = db.search(
-        (singleUser) => singleUser.netlifyId === netlifyId
-      );
+      const result = db((singleUser) => singleUser.netlifyId === 'netlifyId')
 
-      const newUserData = {
+     
+
+      
+
+      const newUserData={
         ...result,
         type: "online",
         netlifyId,
-      };
+      }
 
-      await db.update(newUserData);
-
-      await db.setMeta("accessToken", token.access_token);
-
+      await db.update(newUserData)
+      await db.setMeta('accessToken', token.access_token)
+    
       return [true, newUserData];
     } catch (error) {
       return [false, "techinal"];
@@ -78,8 +82,7 @@ const createUsers = () => {
    */
   const signInWithRecovery = async (token) => {
     try {
-    
-    const { id } = await auth.recoveryToken(token);
+      const { id } = await auth.recoveryToken(token);
 
       await db.setMeta("current", id);
       return [true, { id }];
@@ -93,7 +96,7 @@ const createUsers = () => {
    * @param {Blob} image
    */
   const createLocalAccount = async (name, image) => {
-    const id = genarateId();
+    const id = db.generateId();
 
     const newAccount = {
       id,
@@ -103,8 +106,8 @@ const createUsers = () => {
       type: "local",
     };
 
-    await db.add("data", newAccount);
-    await db.setMeta("current", id);
+    await db.add(newAccount);
+    await db.setMeta("current", id );
   };
 
   /**
@@ -114,9 +117,8 @@ const createUsers = () => {
    */
   const changeToOnlineAccount = async (email, password) => {
     try {
-     
-    const currentUser = await getCurrent();
-      const { id: netlifyId, token } = await auth.signup(email, password);
+      const currentUser = await getCurrent();
+      const { id: netlifyId } = await auth.signup(email, password);
       const newUserData = {
         ...currentUser,
         netlifyId,
@@ -124,7 +126,11 @@ const createUsers = () => {
         type: "verifying",
       };
 
-      await db.update("data", newUserData);
+      // await db.put("meta", { id: "current", value: id });
+      // await db.put("meta", { id: "accessToken", value: token.access_token });
+
+      await db.update(newUserData);
+
       return [true, newUserData];
     } catch (error) {
       const errorAsString = error.toString();
@@ -181,7 +187,19 @@ const createUsers = () => {
     
   }
 
-  /**
+  /*@param {string} id
+   * @returns {Promise<[boolean, null | 'technical']>}
+   */
+  const singInLocal = async (id) => {
+  try{
+    await db.setMeta("current", id );
+    const currentUser = await users.getCurrent();
+    return [true, currentUser];
+  } catch (error) {
+    return [false, "technical"];
+  }
+  };
+  /*
    * @returns {Promise<[boolean, null | 'technical']>}
    */
   const signOut = async () => {
@@ -194,7 +212,7 @@ const createUsers = () => {
   };
 
   const cancelVerification = async () => {
-  const user = await getCurrent();
+    const user = await getCurrent();
 
     const response = await db.update({
       ...user,
@@ -210,6 +228,7 @@ const createUsers = () => {
     createLocalAccount,
     signIn,
     signInWithOnlineToken,
+    singInLocal,
     signOut,
     resetPassword,
     signInWithRecovery,
