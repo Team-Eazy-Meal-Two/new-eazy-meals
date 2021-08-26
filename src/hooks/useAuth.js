@@ -58,7 +58,7 @@ const useAuthInsideProvider = () => {
   };
 
   const cancelVerification = async () => {
-    const [success, payload] = await users.cancelVerification();
+    const [ success ] = await users.cancelVerification();
 
     if (success) {
       setUser({

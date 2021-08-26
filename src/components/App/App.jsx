@@ -1,16 +1,16 @@
 import React from "react";
+import { Provider as AuthProvider } from "../../hooks/useAuth";
 import { createGlobalStyle } from "styled-components";
 import { CssBaseline } from "@material-ui/core";
 import { StylesProvider } from "@material-ui/core/styles";
 import { HashRouter } from "react-router-dom";
 import { Routing } from "./App.Routing";
-import { Provider as AuthProvider } from "../../hooks/useAuth";
 
 
 const fireAlert = (registration) => {
   registration.showNotification("Hi there!", {
     body: "This is a discription with more details",
-    badge: "https://team-eazy-meals-two.netlify.app/meta/favicon-32x32.png",
+    badge: "https://team-eazy-meals-two.netlify.app/meta/badge-icon.png",
     icon: "https://team-eazy-meals-two.netlify.app/meta/android-chrome-512x512.png",
     image: "https://team-eazy-meals-two.netlify.app/meta/coverImage.jpg",
     

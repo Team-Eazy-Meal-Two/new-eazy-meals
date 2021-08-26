@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
 import md5 from "md5";
 const STATIC_FILES = [
-  //add badge image as well 1:15:12 - 1:18:15
   '/meta/coverImage.jpg',
+  '/meta/badge-icon.png',
   '/meta/add.png',
   '/meta/view.png',
   '/meta/other.png',
