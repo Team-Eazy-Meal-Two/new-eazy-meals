@@ -5,6 +5,7 @@ import GoTrue from "gotrue-js";
 import { createDbStore } from '../../../src/utils/createDbStore'
 import "../../types/User";
 
+
 const auth = new GoTrue({
   APIUrl: "https://team-eazy-meals-two.netlify.app/.netlify/identity",
   audience: "",
@@ -83,10 +84,8 @@ const createUsers = () => {
     try {
       const { id } = await auth.recoveryToken(token);
 
-      await db.setMeta( "current", id );
-      await db.put("data", { id: id });
-
-      return [true, null];
+      await db.setMeta("current", id);
+      return [true, { id }];
     } catch (error) {
       return [false, "techinal"];
     }
@@ -116,7 +115,7 @@ const createUsers = () => {
    * @param {string} password
    * @returns {Promise<[boolean, null |'emailAlreadyUsed' | 'technical']>}
    */
-  const changeToOnlineAccount = async (id, email, password) => {
+  const changeToOnlineAccount = async (email, password) => {
     try {
       const currentUser = await getCurrent();
       const { id: netlifyId } = await auth.signup(email, password);
@@ -162,7 +161,7 @@ const createUsers = () => {
    * @returns {Promise<User[]>}
    */
   const getUsers = async () => {
-    return await db.search(true, { count: 20, sorting: 'activity' });
+    return await db.search(true, { count: 20, sorting: "activity" });
   };
   /**
    *
@@ -173,6 +172,20 @@ const createUsers = () => {
     await auth.requestPasswordRecovery(email);
     return [true];
   };
+  /**
+   * @param {sting} id
+   * @returns {Promise<[boolean ,null |'technical']>}
+   */
+  const signInLocal =async (id)=>{
+    try{
+      await db.setMeta("current",id);
+      const currentUser = await users.getCurrent();
+      return [true,currentUser];
+    }catch(error){
+      return [false,'technical'];
+    }
+    
+  }
 
   /*@param {string} id
    * @returns {Promise<[boolean, null | 'technical']>}
@@ -191,7 +204,7 @@ const createUsers = () => {
    */
   const signOut = async () => {
     try {
-      await db.setMeta("current", null );
+      await db.setMeta("current", null);
       return [true, null];
     } catch (error) {
       return [false, "technical"];

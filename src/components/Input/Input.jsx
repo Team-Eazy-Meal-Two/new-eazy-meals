@@ -33,8 +33,9 @@ export const Input = (props) => {
     <StyledTextField
     value={value}
     label ={label}
-    // {...props}
-    //  disabled={onChange}
+    InputLabelProps={{shrink: accepts === 'date'? true:undefined}}
+    
+    disabled={onChange}
     onChange={handleChange}
       fullWidth
     InputProps={{type:accepts}}

@@ -205,6 +205,7 @@ export const createDbStore = (name, keys = []) => {
     remove,
     setMeta,
     getMeta,
+    createDbStore
   }
 };
 
