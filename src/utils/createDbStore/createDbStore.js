@@ -40,8 +40,8 @@ export const createDbStore = (name, keys = []) => {
 
   const getMeta = async (key) => {
     const db = await dbRequest;
-    const { value } = await db.get('meta', key)
-    return value
+    const response = await db.get('meta', key)
+    return response && response.value
 
   }
 
@@ -150,12 +150,13 @@ export const createDbStore = (name, keys = []) => {
       reverse: options.reverse === undefined ? defaultOptions.reverse : options.reverse,
     }
      
-    const { count, sorting, reverse } = internalOptions;
+    const { count, sorting } = internalOptions;
 
     const db = await dbRequest;
+    console.log(sorting, db)
     const index = db.transaction('data')
     .store
-    .index(`${sorting}-index`, reverse ? 'prev' : 'next');
+    .index(`${sorting}-index`);
     let cursor = await index.openCursor();
 
     let countTrack = 0;
