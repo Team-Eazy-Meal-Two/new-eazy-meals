@@ -1,30 +1,44 @@
 import React from "react";
-import { Input } from "../../components/Input";
+import { Button } from "../../components/Button";
 import { Layout } from "../../components/Layout";
 import styled from "styled-components";
 import { ItemPreview } from "../../components/ItemPreview";
 import { useItemsList } from "./ItemsList.useItemsList";
 import { tokens } from "../../data/tokens";
+import { Add } from "./ItemsList.Add";
 
-const InputWrapper = styled.div`
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: ${tokens.spacing.m};
+`;
+const ButtonWrap = styled.div`
   padding: ${tokens.spacing.s};
 `;
 
 export const ItemsList = () => {
   const {
-    tags,
-    update,
-    steps,
-    title,
-    timeInMinutes,
-    description,
-    ingredients,
     list,
-    submit,
+    phase,
+    cancelAdd,
+    saveAdd,
+    startAdd
+  
   } = useItemsList();
 
   return (
     <Layout title="recipes">
+      <ButtonRow>
+        <ButtonWrap>
+          <Button action={() => console.log('filtering')}>Filtering</Button>
+        </ButtonWrap>
+        <ButtonWrap>
+          <Button action={startAdd} importance="primary">
+            Add Receipe
+          </Button>
+        </ButtonWrap>
+      </ButtonRow>
+
       {list.map(
         ({
           id,
@@ -39,52 +53,8 @@ export const ItemsList = () => {
         )
       )}
 
-      <Layout
-        overlay
-        title=" Add Recipe"
-        form
-        padded
-        primary={["Add ", "#"]}
-        secondary={["Cancel", "#"]}
-      >
-        <div>
-          <InputWrapper>
-            <Input label="title" value={title} onChange={update("title")} />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Input label="Tags" value={tags} onChange={update("tags")} />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Input label="steps" value={steps} onChange={update("steps")} />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Input
-              label="ingredients"
-              value={ingredients}
-              onChange={update("ingredients")}
-            />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Input
-              label="timeInMinutes"
-              value={timeInMinutes}
-              onChange={update("timeInMinutes")}
-            />
-          </InputWrapper>
-
-          <InputWrapper>
-            <Input
-              label="description"
-              value={description}
-              onChange={update("priceInCents")}
-            />
-          </InputWrapper>
-        </div>
-      </Layout>
+        <Add onClose={cancelAdd} onSave={saveAdd} open={phase === 'adding'} />
+       
     </Layout>
   );
 };
