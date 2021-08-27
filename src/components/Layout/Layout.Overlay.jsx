@@ -1,12 +1,11 @@
-import React from "react";
+import React from 'react'
 import styled from "styled-components";
+import { Dialog } from '@material-ui/core';
 import { tokens } from "../../data/tokens";
-import { Overlay} from '../Layout/Layout.Overlay'
 import { Text } from "../Text";
 import { Button } from "../Button";
 import { Link } from "../Link";
 import { Alert } from "../Alert";
-import { useHistory } from "react-router";
 import "../../types/action";
 
 const COLORS = {
@@ -16,29 +15,30 @@ const COLORS = {
   blackStrong: `rgb(${tokens.colors.black}),${tokens.opacity.strong}`,
 };
 
-const Base = styled.div`
-  text-align: center;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: ${({ $inverse }) =>
-    $inverse ? COLORS.whiteStronger : COLORS.blackStrong};
-  width: 100%;
-  max-width: 25rem;
-  max-height: 45rem;
-`;
+// const Base = styled.div`
+//   text-align: center;
+//   height: 100%;
+//   display: flex;
+//   flex-direction: column;
+//   color: ${({ $inverse }) =>
+//     $inverse ? COLORS.whiteStronger : COLORS.blackStrong};
+//   width: 100%;
+//   max-width: 25rem;
+//   max-height: 45rem;
+// `;
 
-const Content = styled.div`
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-`;
+// const Content = styled.div`
+//   flex-grow: 1;
+//   display: flex;
+//   flex-direction: column;
+// `;
 const Nested = styled.div`
   padding: ${({ padded }) => (padded ? `0 ${tokens.spacing.m}` : 0)};
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  align-items: center; ;
+  align-items: center;
+  width:100%;
 `;
 
 const ButtonWrap = styled.div`
@@ -62,16 +62,22 @@ const BaseWrap = styled.div`
 const AlertWrap = styled.div`
   padding-bottom: ${tokens.spacing.m};
 `;
-const Header = styled.header`
-  padding: ${tokens.spacing.xl} ${tokens.spacing.m} 0;
-`;
-const OverlayHeader= styled.div`
+// const Header = styled.header`
+//   padding: ${tokens.spacing.xl} ${tokens.spacing.m} 0;
+// `;
+const Header= styled.div`
 padding: ${tokens.spacing.l} ${tokens.spacing.m} 0;
 text-align:center;
 `
 const Actions = styled.aside`
   padding: 0 ${tokens.spacing.m} ${tokens.spacing.l};
+  
 `;
+const Base =styled(Dialog)`
+    .MuiDialog-paper{
+        width:100%
+    }
+`
 
 /**
  *
@@ -93,51 +99,32 @@ const Actions = styled.aside`
  * @returns {JSX.Element}
  */
 
-export const Layout = (props) => {
-  const {
-    children,
-    title,
-    inverse,
-    extra,
-    primary,
-    secondary,
-    alert,
-    form,
-    overlay,
-    padded = false,
-  } = props;
 
-  const history = useHistory();
-
-  const handleForm = (event) => {
-    event.preventDefault();
-    if (typeof primary[1] === "string") {
-      return history.push(primary[1], primary[2] || {});
-    }
-    primary[1]();
-  };
-    if(overlay){
-      return <Overlay {...props}/>
-    }
- 
-
-  return (
-    <BaseWrap $inverse={inverse}>
-      <Base>
-        <Header>
-          <Text inverse={inverse} size="xl" component="h1">
+export const Overlay =(props)=>{
+    const {
+        children,
+        title,
+        inverse,
+        extra,
+        primary,
+        secondary,
+        alert,
+        form,
+        padded=false,
+      } = props;
+    
+    return(
+        <Base open>
+          <Header>
+          <Text size ='xl' component='h2' inverse={inverse}>
             {title}
           </Text>
-        </Header>
-        <Content
-          as={form ? "form" : "div"}
-          onSubmit={form ? handleForm : undefined}
-        >
-          <main>
-            <Nested padded={padded}>
+          </Header>
+
+          <Nested padded={padded}>
               <NestedChildren>{children} </NestedChildren>
             </Nested>
-          </main>
+
           <Actions aria-label="actions">
             {alert && (
               <AlertWrap>
@@ -185,9 +172,8 @@ export const Layout = (props) => {
               </LinkWrap>
             )}
           </Actions>
-        </Content>
-      </Base>
-    </BaseWrap>
-  );
-};
-export default Layout;
+        </Base>
+
+    )
+}
+export default Overlay;

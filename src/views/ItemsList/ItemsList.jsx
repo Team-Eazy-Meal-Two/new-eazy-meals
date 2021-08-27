@@ -1,36 +1,91 @@
-import React, { useContext} from "react";
-import {Input} from '../../components/Input'
-import {useForm} from './ItemsList.useForm'
-import { context as authContext } from "../../hooks/useAuth";
-import { useItemsList } from './ItemsList.useItemsList';
+import React from "react";
+import { Input } from "../../components/Input";
+import { Layout } from "../../components/Layout";
+import styled from "styled-components";
+import { ItemPreview } from "../../components/ItemPreview";
+import { useItemsList } from "./ItemsList.useItemsList";
+import { tokens } from "../../data/tokens";
+
+const InputWrapper = styled.div`
+  padding: ${tokens.spacing.s};
+`;
 
 export const ItemsList = () => {
-  const { user, signOut } = useContext(authContext);
-  useItemsList();
-  const {date,location,name,priceInCents,surname,update}=useForm()
-  
+  const {
+    tags,
+    update,
+    steps,
+    title,
+    timeInMinutes,
+    description,
+    ingredients,
+    list,
+    submit,
+  } = useItemsList();
 
   return (
-    <div>
-      {user.image &&<img width="100" src={URL.createObjectURL(user.image)} alt="" />}
-      <div>Logged In: {user ? JSON.stringify(user) : 'NO USER'}</div>
+    <Layout title="recipes">
+      {list.map(
+        ({
+          id,
+          tags,
+          steps,
+          title,
+          timeInMinutes,
+          description,
+          ingredients,
+        }) => (
+          <ItemPreview key={id} title={`${title}${description}`} action="#" />
+        )
+      )}
 
-      <button onClick={signOut}>
-        LOG OUT
-      </button>
+      <Layout
+        overlay
+        title=" Add Recipe"
+        form
+        padded
+        primary={["Add ", "#"]}
+        secondary={["Cancel", "#"]}
+      >
+        <div>
+          <InputWrapper>
+            <Input label="title" value={title} onChange={update("title")} />
+          </InputWrapper>
 
-      <form>
-        <Input label ='Name' value ={name}onChange ={update('name')}/>
-        <Input label ='Surname' value ={surname} onChange={update('name')}/>
-        <Input label ='Date' value = {date}onChange ={update('date')}/>
-        <Input label ='location' value ={location}onChange={update('location')}/>
-        <Input label ='Price'
-         value ={priceInCents}onChange ={update('priceInCents')}/>
-        
+          <InputWrapper>
+            <Input label="Tags" value={tags} onChange={update("tags")} />
+          </InputWrapper>
 
+          <InputWrapper>
+            <Input label="steps" value={steps} onChange={update("steps")} />
+          </InputWrapper>
 
-      </form>
-    </div>
+          <InputWrapper>
+            <Input
+              label="ingredients"
+              value={ingredients}
+              onChange={update("ingredients")}
+            />
+          </InputWrapper>
+
+          <InputWrapper>
+            <Input
+              label="timeInMinutes"
+              value={timeInMinutes}
+              onChange={update("timeInMinutes")}
+            />
+          </InputWrapper>
+
+          <InputWrapper>
+            <Input
+              label="description"
+              value={description}
+              onChange={update("priceInCents")}
+            />
+          </InputWrapper>
+        </div>
+      </Layout>
+    </Layout>
   );
 };
 

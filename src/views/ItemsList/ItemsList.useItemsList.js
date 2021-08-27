@@ -1,103 +1,91 @@
-// import { useState } from "react";
-// import { users } from "../../api/users";
-// import { useHistory } from "react-router-dom";
-// import { useMount } from "react-use";
-
-// export const useItemsList = () => {
-//   const [name, setName] = useState("");
-//   const [surname, setSurname] = useState("");
-//   const [date, SetDate] = useState("");
-//   const [location, setLocation] = useState("");
-//   const [priceInCents, setPriceInCents] = useState("");
-//   const[list,setList]=useState([]);
-//   const [alert, setAlert] = useState(null);
-  
-
-//   /**
-//    * @type {Record<Exclude<shootKey, 'id'>,(newValue :any)=> void}
-//    */
-//   const updateFns = {
-//     date: SetDate,
-//     location: setLocation,
-//     name: setName,
-//     priceInCents: setPriceInCents,
-//     surname: setSurname,
-//   };
-
-//   /**
-//    * @param {shootKey} key
-//    */
-//   const update = (key) => (value) => {
-//     const fn = updateFns[key];
-//     fn(value);
-//   };
-
-//   /**
-//    *
-//    */
-
-//   const submit = (event) => {
-//     event.preventDefault();
-//     if (!name || name.trim() === "") setAlert("missingName");
-//   };
-  
-//   const history = useHistory();
-//   const [current, setCurrent] = useState("");
-
-//   useMount(async () => {
-//     // const { id } = await users.getCurrent();
-
-//     users.getCurrent().then((response) => {
-//       if (!response) return history.push("/");
-//       setCurrent(response);
-//     });
-//   });
-
-//   const signOff = async () => {
-//     users.signOff();
-//     return history.push("/");
-//   };
-//   return {
-//     date,
-//     update,
-//     location,
-//     name,
-//     priceInCents,
-//     surname,
-//     current,
-//     signOff,
-//   };
-  
-//};
-
-import { useState } from 'react';
-import { users } from '../../api/users';
-import { useHistory } from 'react-router-dom';
-//import { useMount } from 'react-use';
+import {useContext, useState } from 'react';
+import { recipes} from '../../api/users/recipes'
+import { useMount } from 'react-use';
+import { context as authContext } from "../../hooks/useAuth"
+import '../../types/Recipe'
 
 export const useItemsList = () => {
-const history =useHistory()
-const [current, setCurrent] = useState('')
+    const { user, signOut } = useContext(authContext);
 
-// useMount(async() =>{
-// // const result = await recipes.search(() => true, { 
-// sorting:'priceInCents',
-// reverse: true,
-// })
+    const [title, setTitle] = useState("");
+    const [timeInMinutes, setTimeInMinutes] = useState();
+    const [description, setDescription] = useState("");
+    const [tags, setTags] = useState([]);
+    const [steps, setSteps] = useState([]);
+    const [ingredients, setIngredients] = useState([]);
+    const [list,setList]=useState([]);
+  
+    const [alert, setAlert] = useState(null);
+  
+    /**
+     * @type {Record<Exclude<recipeKey, 'id'>,(newValue :any)=> void}
+     */
+    const updateFns = {
+      description: setDescription,
+      tags: setTags,
+      title: setTitle,
+      steps: setSteps,
+      timeInMinutes: setTimeInMinutes,
+      ingredients:setIngredients
+    };
+  
+    /**
+     * @param {shootKey} key
+     */
+    const update = (key) => (value) => {
+      const fn = updateFns[key];
+      fn(value);
+    };
+  
+    /**
+     *
+     */
+  
+    const submit = async (event) => {
+      event.preventDefault();
+      if (!title || title.trim() === "")  return setAlert("missingName");
+      /**
+       * @typedef {object} Recipe
+       */
+      const response =  await recipes.add({
 
+        tags: tags||null,
+        steps: steps ||null,
+        title : title|| null,
+        timeInMinutes: timeInMinutes|| null,
+        description : description|| null,
+        ingredients : ingredients|| null,
+       
+      });
+      setList([
+          ...response,
+          ...list
+      ])
+    }
 
-users.getCurrent().then((response) => {
-if (!response) return history.push('/')
-setCurrent(response)
-})
+      useMount(async() =>{
+        const result = await recipes.search(true, { 
+       sorting:'timeInMinutes',
+       reverse: true,
+       })
+       setList(result)
+      
+       })
 
-
-const signOff = async () => {
-users.signOff();
-return history.push('/')
-}
-return { 
-current,
-signOff,
-}
+  
+    return {
+      tags,
+      update,
+      steps,
+      title,
+      timeInMinutes,
+      description,
+      ingredients,
+      submit,
+      signOut,
+      user,
+      list,
+      alert,
+      
+    };
 }
